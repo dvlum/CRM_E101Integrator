@@ -1,0 +1,739 @@
+﻿<root>
+  <tracePacket>
+    <businessObject>Ice.Proxy.BO.ReportMonitorImpl</businessObject>
+    <methodName>GetRowsKeepIdleTime</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>Ice.Tablesets.ReportMonitorTableset</returnType>
+    <localTime>6/8/2017 01:57:21:3570560 AM</localTime>
+    <executionTime total="8" roundTrip="8" channel="0" bpm="0" other="0" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="whereClauseSysRptLst" type="System.String"><![CDATA[((PrintDriver='TEXT' AND (AutoAction = 'PRINT' OR AutoAction = 'PREVIEW')) OR (PrintDriver='CRYSTAL' AND (AutoAction = 'PRINT' OR AutoAction = 'AUTOPRT' OR AutoAction = 'PREVIEW' OR AutoAction = 'AUTOPRV')) OR (PrintDriver='EPIFIN' AND (AutoAction = 'PRINT' OR AutoAction = 'PREVIEW')) OR (PrintDriver='BARTENDER' AND (AutoAction = 'AUTOPRT' OR AutoAction = 'AUTOPRV')) OR (PrintDriver='EDI' AND AutoAction <> '') OR (PrintDriver='SSRS' AND (AutoAction = 'PREVIEW' OR AutoAction = 'PRINT') AND LastAction = 'SSRSREADY')) AND WorkStationID ='ZTRLDAP03 3']]></parameter>
+      <parameter name="pageSize" type="System.Int32"><![CDATA[0]]></parameter>
+      <parameter name="absolutePage" type="System.Int32"><![CDATA[0]]></parameter>
+      <parameter name="morePages" type="System.Boolean"><![CDATA[False]]></parameter>
+    </parameters>
+  </tracePacket>
+
+  <tracePacket>
+    <businessObject>Erp.Proxy.BO.CustCntImpl</businessObject>
+    <methodName>GetNewCustCnt</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>System.Void</returnType>
+    <localTime>6/8/2017 01:57:29:5882937 AM</localTime>
+    <executionTime total="11" roundTrip="8" channel="0" bpm="0" other="3" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="ds" type="Erp.BO.CustCntDataSet">
+        <CustCntDataSet xmlns="http://www.epicor.com/Ice/300/BO/CustCnt/CustCnt">
+          <CustCnt>
+            <Company>2000</Company>
+            <CustNum>307</CustNum>
+            <ShipToNum></ShipToNum>
+            <ConNum>1</ConNum>
+            <Name>Ivan Penuelas</Name>
+            <Func></Func>
+            <FaxNum>1</FaxNum>
+            <PhoneNum>NA</PhoneNum>
+            <SpecialAddress>false</SpecialAddress>
+            <Address1></Address1>
+            <Address2></Address2>
+            <Address3></Address3>
+            <City></City>
+            <State></State>
+            <Zip></Zip>
+            <Country>CANADA</Country>
+            <CorpName></CorpName>
+            <EMailAddress>NA2</EMailAddress>
+            <CountryNum>1</CountryNum>
+            <SFPortalPassword></SFPortalPassword>
+            <SFUser>false</SFUser>
+            <PortalUser>false</PortalUser>
+            <RoleCode></RoleCode>
+            <CellPhoneNum>NA</CellPhoneNum>
+            <PagerNum></PagerNum>
+            <HomeNum></HomeNum>
+            <AltNum></AltNum>
+            <ContactTitle></ContactTitle>
+            <ReportsTo></ReportsTo>
+            <Comment>405bdf98-fc4b-e711-80ce-005056a4467d</Comment>
+            <NoContact>false</NoContact>
+            <CreateDate>2017-06-07T00:00:00-04:00</CreateDate>
+            <CreateDcdUserID>manager</CreateDcdUserID>
+            <ChangeDate>2017-06-08T00:00:00-04:00</ChangeDate>
+            <ChangeDcdUserID>manager</ChangeDcdUserID>
+            <Inactive>false</Inactive>
+            <FirstName></FirstName>
+            <MiddleName></MiddleName>
+            <LastName></LastName>
+            <Prefix></Prefix>
+            <Suffix></Suffix>
+            <Initials></Initials>
+            <ExternalID></ExternalID>
+            <GlobalLock>false</GlobalLock>
+            <ShowInputPrice>false</ShowInputPrice>
+            <ChangeTime>6858</ChangeTime>
+            <ChangedBy>manager</ChangedBy>
+            <MasterCustNum>0</MasterCustNum>
+            <MasterShipToNum></MasterShipToNum>
+            <MasterConNum>0</MasterConNum>
+            <PerConID>239</PerConID>
+            <SyncNameToPerCon>true</SyncNameToPerCon>
+            <SyncAddressToPerCon>true</SyncAddressToPerCon>
+            <SyncPhoneToPerCon>true</SyncPhoneToPerCon>
+            <SyncEmailToPerCon>true</SyncEmailToPerCon>
+            <SyncLinksToPerCon>true</SyncLinksToPerCon>
+            <WebSite></WebSite>
+            <IM></IM>
+            <Twitter></Twitter>
+            <LinkedIn></LinkedIn>
+            <FaceBook></FaceBook>
+            <WebLink1></WebLink1>
+            <WebLink2></WebLink2>
+            <WebLink3></WebLink3>
+            <WebLink4></WebLink4>
+            <WebLink5></WebLink5>
+            <PerConAddress>false</PerConAddress>
+            <SysRevID>63208033</SysRevID>
+            <SysRowID>b8a8be9b-5fd9-46be-91ac-d0f503a31b8e</SysRowID>
+            <SyncToExternalCRM>false</SyncToExternalCRM>
+            <ExternalCRMCustomerID></ExternalCRMCustomerID>
+            <ExternalCRMContactID></ExternalCRMContactID>
+            <RoleDescription></RoleDescription>
+            <PrimaryBilling>false</PrimaryBilling>
+            <PrimaryPurchasing>false</PrimaryPurchasing>
+            <PrimaryShipping>false</PrimaryShipping>
+            <GlbFlag>false</GlbFlag>
+            <AttrCodeList></AttrCodeList>
+            <GlbLink></GlbLink>
+            <ContactName></ContactName>
+            <PerConName>Ivan Penuelas</PerConName>
+            <BitFlag>0</BitFlag>
+            <CustNumName>ZU Hernandez</CustNumName>
+            <CustNumBTName></CustNumBTName>
+            <CustNumCustID>ZUAGHD02</CustNumCustID>
+            <MasterCustNumBTName></MasterCustNumBTName>
+            <MasterCustNumName></MasterCustNumName>
+            <MasterCustNumCustID></MasterCustNumCustID>
+            <RowMod></RowMod>
+          </CustCnt>
+        </CustCntDataSet>
+      </parameter>
+      <parameter name="custNum" type="System.Int32"><![CDATA[307]]></parameter>
+      <parameter name="shipToNum" type="System.String"><![CDATA[]]></parameter>
+    </parameters>
+  </tracePacket>
+
+  <tracePacket>
+    <businessObject>Erp.Proxy.BO.CustCntImpl</businessObject>
+    <methodName>GetPerConData</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>System.Void</returnType>
+    <localTime>6/8/2017 01:57:32:0257974 AM</localTime>
+    <executionTime total="17" roundTrip="7" channel="0" bpm="0" other="10" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="PerConID" type="System.Int32"><![CDATA[115]]></parameter>
+      <parameter name="ds" type="Erp.BO.CustCntDataSet">
+        <CustCntDataSet xmlns="http://www.epicor.com/Ice/300/BO/CustCnt/CustCnt">
+          <CustCnt>
+            <Company>2000</Company>
+            <CustNum>307</CustNum>
+            <ShipToNum></ShipToNum>
+            <ConNum>1</ConNum>
+            <Name>Ivan Penuelas</Name>
+            <Func></Func>
+            <FaxNum>1</FaxNum>
+            <PhoneNum>NA</PhoneNum>
+            <SpecialAddress>false</SpecialAddress>
+            <Address1></Address1>
+            <Address2></Address2>
+            <Address3></Address3>
+            <City></City>
+            <State></State>
+            <Zip></Zip>
+            <Country>CANADA</Country>
+            <CorpName></CorpName>
+            <EMailAddress>NA2</EMailAddress>
+            <CountryNum>1</CountryNum>
+            <SFPortalPassword></SFPortalPassword>
+            <SFUser>false</SFUser>
+            <PortalUser>false</PortalUser>
+            <RoleCode></RoleCode>
+            <CellPhoneNum>NA</CellPhoneNum>
+            <PagerNum></PagerNum>
+            <HomeNum></HomeNum>
+            <AltNum></AltNum>
+            <ContactTitle></ContactTitle>
+            <ReportsTo></ReportsTo>
+            <Comment>405bdf98-fc4b-e711-80ce-005056a4467d</Comment>
+            <NoContact>false</NoContact>
+            <CreateDate>2017-06-07T00:00:00-04:00</CreateDate>
+            <CreateDcdUserID>manager</CreateDcdUserID>
+            <ChangeDate>2017-06-08T00:00:00-04:00</ChangeDate>
+            <ChangeDcdUserID>manager</ChangeDcdUserID>
+            <Inactive>false</Inactive>
+            <FirstName></FirstName>
+            <MiddleName></MiddleName>
+            <LastName></LastName>
+            <Prefix></Prefix>
+            <Suffix></Suffix>
+            <Initials></Initials>
+            <ExternalID></ExternalID>
+            <GlobalLock>false</GlobalLock>
+            <ShowInputPrice>false</ShowInputPrice>
+            <ChangeTime>6858</ChangeTime>
+            <ChangedBy>manager</ChangedBy>
+            <MasterCustNum>0</MasterCustNum>
+            <MasterShipToNum></MasterShipToNum>
+            <MasterConNum>0</MasterConNum>
+            <PerConID>239</PerConID>
+            <SyncNameToPerCon>true</SyncNameToPerCon>
+            <SyncAddressToPerCon>true</SyncAddressToPerCon>
+            <SyncPhoneToPerCon>true</SyncPhoneToPerCon>
+            <SyncEmailToPerCon>true</SyncEmailToPerCon>
+            <SyncLinksToPerCon>true</SyncLinksToPerCon>
+            <WebSite></WebSite>
+            <IM></IM>
+            <Twitter></Twitter>
+            <LinkedIn></LinkedIn>
+            <FaceBook></FaceBook>
+            <WebLink1></WebLink1>
+            <WebLink2></WebLink2>
+            <WebLink3></WebLink3>
+            <WebLink4></WebLink4>
+            <WebLink5></WebLink5>
+            <PerConAddress>false</PerConAddress>
+            <SysRevID>63208033</SysRevID>
+            <SysRowID>b8a8be9b-5fd9-46be-91ac-d0f503a31b8e</SysRowID>
+            <SyncToExternalCRM>false</SyncToExternalCRM>
+            <ExternalCRMCustomerID></ExternalCRMCustomerID>
+            <ExternalCRMContactID></ExternalCRMContactID>
+            <RoleDescription></RoleDescription>
+            <PrimaryBilling>false</PrimaryBilling>
+            <PrimaryPurchasing>false</PrimaryPurchasing>
+            <PrimaryShipping>false</PrimaryShipping>
+            <GlbFlag>false</GlbFlag>
+            <AttrCodeList></AttrCodeList>
+            <GlbLink></GlbLink>
+            <ContactName></ContactName>
+            <PerConName>Ivan Penuelas</PerConName>
+            <BitFlag>0</BitFlag>
+            <CustNumName>ZU Hernandez</CustNumName>
+            <CustNumBTName></CustNumBTName>
+            <CustNumCustID>ZUAGHD02</CustNumCustID>
+            <MasterCustNumBTName></MasterCustNumBTName>
+            <MasterCustNumName></MasterCustNumName>
+            <MasterCustNumCustID></MasterCustNumCustID>
+            <RowMod></RowMod>
+          </CustCnt>
+          <CustCnt>
+            <Company>2000</Company>
+            <CustNum>307</CustNum>
+            <ShipToNum></ShipToNum>
+            <ConNum>0</ConNum>
+            <Name></Name>
+            <Func></Func>
+            <FaxNum></FaxNum>
+            <PhoneNum></PhoneNum>
+            <SpecialAddress>false</SpecialAddress>
+            <Address1></Address1>
+            <Address2></Address2>
+            <Address3></Address3>
+            <City></City>
+            <State></State>
+            <Zip></Zip>
+            <Country></Country>
+            <CorpName></CorpName>
+            <EMailAddress></EMailAddress>
+            <CountryNum>0</CountryNum>
+            <SFPortalPassword></SFPortalPassword>
+            <SFUser>false</SFUser>
+            <PortalUser>false</PortalUser>
+            <RoleCode></RoleCode>
+            <CellPhoneNum></CellPhoneNum>
+            <PagerNum></PagerNum>
+            <HomeNum></HomeNum>
+            <AltNum></AltNum>
+            <ContactTitle></ContactTitle>
+            <ReportsTo></ReportsTo>
+            <Comment></Comment>
+            <NoContact>false</NoContact>
+            <CreateDate>2017-06-08T00:00:00-04:00</CreateDate>
+            <CreateDcdUserID>manager</CreateDcdUserID>
+            <ChangeDcdUserID></ChangeDcdUserID>
+            <Inactive>false</Inactive>
+            <FirstName></FirstName>
+            <MiddleName></MiddleName>
+            <LastName></LastName>
+            <Prefix></Prefix>
+            <Suffix></Suffix>
+            <Initials></Initials>
+            <ExternalID></ExternalID>
+            <GlobalLock>false</GlobalLock>
+            <ShowInputPrice>false</ShowInputPrice>
+            <ChangeTime>0</ChangeTime>
+            <ChangedBy></ChangedBy>
+            <MasterCustNum>0</MasterCustNum>
+            <MasterShipToNum></MasterShipToNum>
+            <MasterConNum>0</MasterConNum>
+            <PerConID>0</PerConID>
+            <SyncNameToPerCon>true</SyncNameToPerCon>
+            <SyncAddressToPerCon>true</SyncAddressToPerCon>
+            <SyncPhoneToPerCon>true</SyncPhoneToPerCon>
+            <SyncEmailToPerCon>true</SyncEmailToPerCon>
+            <SyncLinksToPerCon>true</SyncLinksToPerCon>
+            <WebSite></WebSite>
+            <IM></IM>
+            <Twitter></Twitter>
+            <LinkedIn></LinkedIn>
+            <FaceBook></FaceBook>
+            <WebLink1></WebLink1>
+            <WebLink2></WebLink2>
+            <WebLink3></WebLink3>
+            <WebLink4></WebLink4>
+            <WebLink5></WebLink5>
+            <PerConAddress>false</PerConAddress>
+            <SysRevID>0</SysRevID>
+            <SysRowID>00000000-0000-0000-0000-000000000000</SysRowID>
+            <SyncToExternalCRM>false</SyncToExternalCRM>
+            <ExternalCRMCustomerID></ExternalCRMCustomerID>
+            <ExternalCRMContactID></ExternalCRMContactID>
+            <RoleDescription></RoleDescription>
+            <PrimaryBilling>false</PrimaryBilling>
+            <PrimaryPurchasing>false</PrimaryPurchasing>
+            <PrimaryShipping>false</PrimaryShipping>
+            <GlbFlag>false</GlbFlag>
+            <AttrCodeList></AttrCodeList>
+            <GlbLink></GlbLink>
+            <ContactName></ContactName>
+            <PerConName></PerConName>
+            <BitFlag>0</BitFlag>
+            <CustNumName></CustNumName>
+            <CustNumBTName></CustNumBTName>
+            <CustNumCustID></CustNumCustID>
+            <MasterCustNumBTName></MasterCustNumBTName>
+            <MasterCustNumName></MasterCustNumName>
+            <MasterCustNumCustID></MasterCustNumCustID>
+            <RowMod>A</RowMod>
+          </CustCnt>
+        </CustCntDataSet>
+      </parameter>
+    </parameters>
+    <paramDataSetChanges>
+      <paramDataSet name="ds" useDataSetNbr="0">
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Company"><![CDATA[2000]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNum"><![CDATA[307]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ShipToNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ConNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Name"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Func"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FaxNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PhoneNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SpecialAddress"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address1"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address2"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address3"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="City"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="State"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Zip"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Country"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CorpName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="EMailAddress"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CountryNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SFPortalPassword"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SFUser"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PortalUser"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RoleCode"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CellPhoneNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PagerNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="HomeNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="AltNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ContactTitle"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ReportsTo"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Comment"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="NoContact"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CreateDate"><![CDATA[6/8/2017 12:00:00 AM]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CreateDcdUserID"><![CDATA[manager]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangeDcdUserID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Inactive"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FirstName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MiddleName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="LastName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Prefix"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Suffix"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Initials"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlobalLock"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ShowInputPrice"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangeTime"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangedBy"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterShipToNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterConNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConID"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncNameToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncAddressToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncPhoneToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncEmailToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncLinksToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebSite"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="IM"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Twitter"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="LinkedIn"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FaceBook"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink1"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink2"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink3"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink4"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink5"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConAddress"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SysRevID"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SysRowID"><![CDATA[00000000-0000-0000-0000-000000000000]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncToExternalCRM"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalCRMCustomerID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalCRMContactID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RoleDescription"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryBilling"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryPurchasing"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryShipping"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlbFlag"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="AttrCodeList"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlbLink"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ContactName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="BitFlag"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumBTName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumCustID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumBTName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumCustID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RowMod"><![CDATA[A]]></changedValue>
+      </paramDataSet>
+    </paramDataSetChanges>
+  </tracePacket>
+
+  <tracePacket>
+    <businessObject>Erp.Proxy.BO.CustCntImpl</businessObject>
+    <methodName>Update</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>System.Void</returnType>
+    <localTime>6/8/2017 01:57:34:6962444 AM</localTime>
+    <executionTime total="390" roundTrip="387" channel="0" bpm="0" other="3" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="ds" type="Erp.BO.CustCntDataSet">
+        <CustCntDataSet xmlns="http://www.epicor.com/Ice/300/BO/CustCnt/CustCnt">
+          <CustCnt>
+            <Company>2000</Company>
+            <CustNum>307</CustNum>
+            <ShipToNum></ShipToNum>
+            <ConNum>1</ConNum>
+            <Name>Ivan Penuelas</Name>
+            <Func></Func>
+            <FaxNum>1</FaxNum>
+            <PhoneNum>NA</PhoneNum>
+            <SpecialAddress>false</SpecialAddress>
+            <Address1></Address1>
+            <Address2></Address2>
+            <Address3></Address3>
+            <City></City>
+            <State></State>
+            <Zip></Zip>
+            <Country>CANADA</Country>
+            <CorpName></CorpName>
+            <EMailAddress>NA2</EMailAddress>
+            <CountryNum>1</CountryNum>
+            <SFPortalPassword></SFPortalPassword>
+            <SFUser>false</SFUser>
+            <PortalUser>false</PortalUser>
+            <RoleCode></RoleCode>
+            <CellPhoneNum>NA</CellPhoneNum>
+            <PagerNum></PagerNum>
+            <HomeNum></HomeNum>
+            <AltNum></AltNum>
+            <ContactTitle></ContactTitle>
+            <ReportsTo></ReportsTo>
+            <Comment>405bdf98-fc4b-e711-80ce-005056a4467d</Comment>
+            <NoContact>false</NoContact>
+            <CreateDate>2017-06-07T00:00:00-04:00</CreateDate>
+            <CreateDcdUserID>manager</CreateDcdUserID>
+            <ChangeDate>2017-06-08T00:00:00-04:00</ChangeDate>
+            <ChangeDcdUserID>manager</ChangeDcdUserID>
+            <Inactive>false</Inactive>
+            <FirstName></FirstName>
+            <MiddleName></MiddleName>
+            <LastName></LastName>
+            <Prefix></Prefix>
+            <Suffix></Suffix>
+            <Initials></Initials>
+            <ExternalID></ExternalID>
+            <GlobalLock>false</GlobalLock>
+            <ShowInputPrice>false</ShowInputPrice>
+            <ChangeTime>6858</ChangeTime>
+            <ChangedBy>manager</ChangedBy>
+            <MasterCustNum>0</MasterCustNum>
+            <MasterShipToNum></MasterShipToNum>
+            <MasterConNum>0</MasterConNum>
+            <PerConID>239</PerConID>
+            <SyncNameToPerCon>true</SyncNameToPerCon>
+            <SyncAddressToPerCon>true</SyncAddressToPerCon>
+            <SyncPhoneToPerCon>true</SyncPhoneToPerCon>
+            <SyncEmailToPerCon>true</SyncEmailToPerCon>
+            <SyncLinksToPerCon>true</SyncLinksToPerCon>
+            <WebSite></WebSite>
+            <IM></IM>
+            <Twitter></Twitter>
+            <LinkedIn></LinkedIn>
+            <FaceBook></FaceBook>
+            <WebLink1></WebLink1>
+            <WebLink2></WebLink2>
+            <WebLink3></WebLink3>
+            <WebLink4></WebLink4>
+            <WebLink5></WebLink5>
+            <PerConAddress>false</PerConAddress>
+            <SysRevID>63208033</SysRevID>
+            <SysRowID>b8a8be9b-5fd9-46be-91ac-d0f503a31b8e</SysRowID>
+            <SyncToExternalCRM>false</SyncToExternalCRM>
+            <ExternalCRMCustomerID></ExternalCRMCustomerID>
+            <ExternalCRMContactID></ExternalCRMContactID>
+            <RoleDescription></RoleDescription>
+            <PrimaryBilling>false</PrimaryBilling>
+            <PrimaryPurchasing>false</PrimaryPurchasing>
+            <PrimaryShipping>false</PrimaryShipping>
+            <GlbFlag>false</GlbFlag>
+            <AttrCodeList></AttrCodeList>
+            <GlbLink></GlbLink>
+            <ContactName></ContactName>
+            <PerConName>Ivan Penuelas</PerConName>
+            <BitFlag>0</BitFlag>
+            <CustNumName>ZU Hernandez</CustNumName>
+            <CustNumBTName></CustNumBTName>
+            <CustNumCustID>ZUAGHD02</CustNumCustID>
+            <MasterCustNumBTName></MasterCustNumBTName>
+            <MasterCustNumName></MasterCustNumName>
+            <MasterCustNumCustID></MasterCustNumCustID>
+            <RowMod></RowMod>
+          </CustCnt>
+          <CustCnt>
+            <Company>2000</Company>
+            <CustNum>307</CustNum>
+            <ShipToNum></ShipToNum>
+            <ConNum>0</ConNum>
+            <Name>Adam Montoya</Name>
+            <Func>Account Manager</Func>
+            <FaxNum>1-310-517-0998</FaxNum>
+            <PhoneNum>1-310-517-9888 x124</PhoneNum>
+            <SpecialAddress>false</SpecialAddress>
+            <Address1></Address1>
+            <Address2></Address2>
+            <Address3></Address3>
+            <City></City>
+            <State></State>
+            <Zip></Zip>
+            <Country></Country>
+            <CorpName></CorpName>
+            <EMailAddress>adamm@icpdas-usa.com</EMailAddress>
+            <CountryNum>0</CountryNum>
+            <SFPortalPassword></SFPortalPassword>
+            <SFUser>false</SFUser>
+            <PortalUser>false</PortalUser>
+            <RoleCode></RoleCode>
+            <CellPhoneNum>1-562-858-9039</CellPhoneNum>
+            <PagerNum></PagerNum>
+            <HomeNum></HomeNum>
+            <AltNum></AltNum>
+            <ContactTitle>Account Manager</ContactTitle>
+            <ReportsTo></ReportsTo>
+            <Comment></Comment>
+            <NoContact>false</NoContact>
+            <CreateDate>2017-06-08T00:00:00-04:00</CreateDate>
+            <CreateDcdUserID>manager</CreateDcdUserID>
+            <ChangeDcdUserID></ChangeDcdUserID>
+            <Inactive>false</Inactive>
+            <FirstName>Adam</FirstName>
+            <MiddleName>Montoya</MiddleName>
+            <LastName></LastName>
+            <Prefix></Prefix>
+            <Suffix></Suffix>
+            <Initials></Initials>
+            <ExternalID></ExternalID>
+            <GlobalLock>false</GlobalLock>
+            <ShowInputPrice>false</ShowInputPrice>
+            <ChangeTime>0</ChangeTime>
+            <ChangedBy></ChangedBy>
+            <MasterCustNum>0</MasterCustNum>
+            <MasterShipToNum></MasterShipToNum>
+            <MasterConNum>0</MasterConNum>
+            <PerConID>115</PerConID>
+            <SyncNameToPerCon>true</SyncNameToPerCon>
+            <SyncAddressToPerCon>true</SyncAddressToPerCon>
+            <SyncPhoneToPerCon>true</SyncPhoneToPerCon>
+            <SyncEmailToPerCon>true</SyncEmailToPerCon>
+            <SyncLinksToPerCon>true</SyncLinksToPerCon>
+            <WebSite>www.icpdas-usa.com</WebSite>
+            <IM></IM>
+            <Twitter></Twitter>
+            <LinkedIn></LinkedIn>
+            <FaceBook></FaceBook>
+            <WebLink1></WebLink1>
+            <WebLink2></WebLink2>
+            <WebLink3></WebLink3>
+            <WebLink4></WebLink4>
+            <WebLink5></WebLink5>
+            <PerConAddress>false</PerConAddress>
+            <SysRevID>0</SysRevID>
+            <SysRowID>00000000-0000-0000-0000-000000000000</SysRowID>
+            <SyncToExternalCRM>false</SyncToExternalCRM>
+            <ExternalCRMCustomerID></ExternalCRMCustomerID>
+            <ExternalCRMContactID></ExternalCRMContactID>
+            <RoleDescription></RoleDescription>
+            <PrimaryBilling>false</PrimaryBilling>
+            <PrimaryPurchasing>false</PrimaryPurchasing>
+            <PrimaryShipping>false</PrimaryShipping>
+            <GlbFlag>false</GlbFlag>
+            <AttrCodeList></AttrCodeList>
+            <GlbLink></GlbLink>
+            <ContactName></ContactName>
+            <PerConName>Adam Montoya</PerConName>
+            <BitFlag>0</BitFlag>
+            <CustNumName></CustNumName>
+            <CustNumBTName></CustNumBTName>
+            <CustNumCustID></CustNumCustID>
+            <MasterCustNumBTName></MasterCustNumBTName>
+            <MasterCustNumName></MasterCustNumName>
+            <MasterCustNumCustID></MasterCustNumCustID>
+            <RowMod>A</RowMod>
+          </CustCnt>
+        </CustCntDataSet>
+      </parameter>
+    </parameters>
+    <paramDataSetChanges>
+      <paramDataSet name="ds" useDataSetNbr="0">
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Company"><![CDATA[2000]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNum"><![CDATA[307]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ShipToNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ConNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Name"><![CDATA[Adam Montoya]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Func"><![CDATA[Account Manager]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FaxNum"><![CDATA[1-310-517-0998]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PhoneNum"><![CDATA[1-310-517-9888 x124]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SpecialAddress"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address1"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address2"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Address3"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="City"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="State"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Zip"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Country"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CorpName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="EMailAddress"><![CDATA[adamm@icpdas-usa.com]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CountryNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SFPortalPassword"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SFUser"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PortalUser"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RoleCode"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CellPhoneNum"><![CDATA[1-562-858-9039]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PagerNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="HomeNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="AltNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ContactTitle"><![CDATA[Account Manager]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ReportsTo"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Comment"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="NoContact"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CreateDate"><![CDATA[6/8/2017 12:00:00 AM]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CreateDcdUserID"><![CDATA[manager]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangeDcdUserID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Inactive"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FirstName"><![CDATA[Adam]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MiddleName"><![CDATA[Montoya]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="LastName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Prefix"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Suffix"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Initials"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlobalLock"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ShowInputPrice"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangeTime"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ChangedBy"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterShipToNum"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterConNum"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConID"><![CDATA[115]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncNameToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncAddressToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncPhoneToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncEmailToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncLinksToPerCon"><![CDATA[True]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebSite"><![CDATA[www.icpdas-usa.com]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="IM"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="Twitter"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="LinkedIn"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="FaceBook"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink1"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink2"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink3"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink4"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="WebLink5"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConAddress"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SysRevID"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SysRowID"><![CDATA[00000000-0000-0000-0000-000000000000]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="SyncToExternalCRM"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalCRMCustomerID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ExternalCRMContactID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RoleDescription"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryBilling"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryPurchasing"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PrimaryShipping"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlbFlag"><![CDATA[False]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="AttrCodeList"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="GlbLink"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="ContactName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="PerConName"><![CDATA[Adam Montoya]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="BitFlag"><![CDATA[0]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumBTName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="CustNumCustID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumBTName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumName"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="MasterCustNumCustID"><![CDATA[]]></changedValue>
+        <changedValue tableName="CustCnt" rowState="Added" rowNum="1" colName="RowMod"><![CDATA[A]]></changedValue>
+      </paramDataSet>
+    </paramDataSetChanges>
+  </tracePacket>
+
+  <tracePacket>
+    <businessObject>Erp.Proxy.BO.CustCntImpl</businessObject>
+    <methodName>GetRows</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>Erp.Tablesets.CustCntTableset</returnType>
+    <localTime>6/8/2017 01:57:35:0868719 AM</localTime>
+    <executionTime total="28" roundTrip="27" channel="0" bpm="0" other="1" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="whereClauseCustCnt" type="System.String"><![CDATA[CustNum = '307' BY Name]]></parameter>
+      <parameter name="whereClauseCustCntAttch" type="System.String"><![CDATA[]]></parameter>
+      <parameter name="pageSize" type="System.Int32"><![CDATA[0]]></parameter>
+      <parameter name="absolutePage" type="System.Int32"><![CDATA[0]]></parameter>
+      <parameter name="morePages" type="System.Boolean"><![CDATA[False]]></parameter>
+    </parameters>
+  </tracePacket>
+
+  <tracePacket>
+    <businessObject>Erp.Proxy.BO.CustCntImpl</businessObject>
+    <methodName>GetCustCntGlobalFields</methodName>
+    <appServerUri>net.tcp://ztrlderp02/EpicorTest10/</appServerUri>
+    <returnType>System.String</returnType>
+    <localTime>6/8/2017 01:57:35:1024937 AM</localTime>
+    <executionTime total="9" roundTrip="8" channel="0" bpm="0" other="1" />
+    <retries>0</retries>
+    <parameters>
+      <parameter name="CustNum" type="System.Int32"><![CDATA[307]]></parameter>
+      <parameter name="ShiptoNum" type="System.String"><![CDATA[]]></parameter>
+      <parameter name="ConNum" type="System.Int32"><![CDATA[2]]></parameter>
+    </parameters>
+  </tracePacket>
+
+
+</root>
