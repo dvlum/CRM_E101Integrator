@@ -177,6 +177,9 @@
     <Content Include="EpicorSps\spGetCRMProcessedOps.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="EpicorSps\spGetE101QuoteOps.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="EpicorSps\spGetOps.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

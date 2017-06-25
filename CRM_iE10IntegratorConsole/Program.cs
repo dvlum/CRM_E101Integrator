@@ -54,27 +54,26 @@ namespace CRM_iE10IntegratorConsole
 
                     #region E101 Customers
 
-                    Console.WriteLine("--------------------E10 Customers OPS---------------------------");
-                    Console.WriteLine("Obtenemos los Cutomers pendientes de EPICOR...");
-                    VerifyEpicorChange();
-                    Console.WriteLine();
+                    //Console.WriteLine("--------------------E10 Customers OPS---------------------------");
+                    //Console.WriteLine("Obtenemos los Cutomers pendientes de EPICOR...");
+                    //VerifyEpicorChange();
+                    //Console.WriteLine();
 
-                    Thread.Sleep(2000);
+                    //Thread.Sleep(2000);
 
 
                     #endregion
 
                     #region CRM Customers
 
-                    Console.WriteLine("-------------------CRM Account OPS----------------------------");
-                    Console.WriteLine("Obtenemos los Cutomers pendientes de CRM...");
-                    VerifyCRMChange();
-                    Console.WriteLine();
+                    //Console.WriteLine("-------------------CRM Account OPS----------------------------");
+                    //Console.WriteLine("Obtenemos los Cutomers pendientes de CRM...");
+                    //VerifyCRMChange();
+                    //Console.WriteLine();
 
-                    Thread.Sleep(2000);
+                    //Thread.Sleep(2000);
 
                     #endregion
-
 
                     #region CRM Quotes
 
@@ -87,31 +86,35 @@ namespace CRM_iE10IntegratorConsole
 
                     #region E101 Contacts
 
-                    Console.WriteLine("------------------E10 Contact OPS-----------------------------");
-                    Console.WriteLine("Obtenemos Contactos pendientes de Epicor...");
-                    E101CreateUpdateContact();
-                    Console.WriteLine();
-                    Thread.Sleep(2000);
+                    //Console.WriteLine("------------------E10 Contact OPS-----------------------------");
+                    //Console.WriteLine("Obtenemos Contactos pendientes de Epicor...");
+                    //E101CreateUpdateContact();
+                    //Console.WriteLine();
+                    //Thread.Sleep(2000);
 
                     #endregion
 
                     #region CRM Contacts                    
 
-                    Console.WriteLine("------------------CRM Contacts OPS-----------------------------");
-                    Console.WriteLine("Obtenemos Contactos pendientes de CRM...");
-                    CRMCreateUpdateContact();
-                    Console.WriteLine();
-                    Thread.Sleep(2000);
+                    //Console.WriteLine("------------------CRM Contacts OPS-----------------------------");
+                    //Console.WriteLine("Obtenemos Contactos pendientes de CRM...");
+                    //CRMCreateUpdateContact();
+                    //Console.WriteLine();
+                    //Thread.Sleep(2000);
 
                     #endregion
-                    //Console.WriteLine("------------------E10 Quotes OPS-----------------------------");
-                    //Console.WriteLine("Obtenemos las cotizaciones pendientes de Epicor...");
-                    //E101CreateUpdCRMQuote();
-                    //Console.WriteLine();
 
-                    //Thread.Sleep(5000);
+                    #region E101 Quotes
+
+                    Console.WriteLine("------------------E10 Quotes OPS-----------------------------");
+                    Console.WriteLine("Obtenemos las cotizaciones pendientes de Epicor...");
+                    E101CreateUpdCRMQuote();
+                    Console.WriteLine();
+                    Thread.Sleep(5000);
+
+                    #endregion
                     //DelectQuoteLine();
-                   
+
 
                 }
                 catch (Exception Ex)
@@ -583,7 +586,7 @@ namespace CRM_iE10IntegratorConsole
                         Console.WriteLine(manageNullKey(Q, "new_customerpo"));
                         Console.WriteLine(manageNullKey(Q, "ownerid"));
                         Console.WriteLine(manageNullKey(Q, "description"));
-                        Console.WriteLine("--------------------------------------------------");*/
+                        Console.WriteLine("--------------------------------------------------");*/                       
 
                         ColumnSet cols = new ColumnSet(new String[] { "epic6s_tempcustid", "accountnumber", "name", "address1_line1", "address1_line2", "address1_line3", "address1_stateorprovince", "address1_city" });
                         Entity custAccount = clientConn.Retrieve("account", Guid.Parse(((EntityReference)Q["customerid"]).Id.ToString()), cols);
@@ -1002,93 +1005,169 @@ namespace CRM_iE10IntegratorConsole
 
         public static void E101CreateUpdCRMQuote()
         {
-            #region //create a quote for this customer
-            CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
 
+            
+            
             try
             {
-                //create a batch for commit/rollback scenario
-                Console.WriteLine("Creamos Batch...");
-                Guid batchID = clientConn.CreateBatchOperationRequest("quotebatch", true, false);
 
-                //create quote for this account
-                //Entity quote = new Entity("quote");
+                String spGetOps = File.ReadAllText(ConfigurationManager.AppSettings["spGetE101QuoteOps"].ToString());
+                String spUpdOps = String.Empty;
 
-                Dictionary<string, CrmDataTypeWrapper> quoteArray = new Dictionary<string, CrmDataTypeWrapper>();
+                DataTable dtOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
+                                                                            ConfigurationManager.AppSettings["iE101Connection"], "Ops", 0);
 
-                //set the customer
-                //quoteArray["customerid"] = new CrmDataTypeWrapper(new EntityReference ("account", accId), CrmFieldType.Customer);
+                CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
 
-                Console.WriteLine("Obtenemos Id Cliente...");
-                CrmDataTypeWrapper cust = new CrmDataTypeWrapper();
-                cust.ReferencedEntity = "account";
-                cust.Value = Guid.Parse("0C7A756E-A349-E711-80CE-005056A4467D"); // Hernandez quote
-                cust.Type = CrmFieldType.Customer;
+                Console.WriteLine("Number of Records to Process: [" + dtOps.Rows.Count.ToString() + "]");
 
-                quoteArray["customerid"] = cust;// new CrmDataTypeWrapper();
+                QuoteImpl quoteImpl = null;
+                QuoteDataSet dsQuoteImpl = null;
 
-                //set the name
-                quoteArray["name"] = new CrmDataTypeWrapper("Sample quote " + DateTime.Now.ToString(), CrmFieldType.String);
-
-                //set the name
-                Guid quoteID = Guid.NewGuid();
-                quoteArray["quoteid"] = new CrmDataTypeWrapper(quoteID, CrmFieldType.UniqueIdentifier);
-
-                //set the pricelist // change it to one of your records
-                CrmDataTypeWrapper pricelevel = new CrmDataTypeWrapper();
-                pricelevel.ReferencedEntity = "pricelevel";
-                pricelevel.Value = new Guid("D1DDBE2B-B44F-E711-80DE-000D3AF32500");
-                pricelevel.Type = CrmFieldType.Lookup;
-                quoteArray["pricelevelid"] = pricelevel; //new CrmDataTypeWrapper(new EntityReference("pricelevel", new Guid("9222A75A-743D-E711-80E4-3863BB34E918")), CrmFieldType.Lookup);
+                foreach (DataRow R in dtOps.Rows)
+                {
 
 
-                Console.WriteLine("Creamos Encabezado...");
-                clientConn.CreateNewRecord("quote", quoteArray, batchId: batchID);
+
+                    using (Session session = new Session(epiConnector.epiUser, epiConnector.epiPassword, epiConnector.epiServer, Session.LicenseType.Default, epiConnector.epiConfig))
+                    {
+                        #region Obtenemos los datos de la cotizacion
+
+                        Console.WriteLine("Exito al hacer la conexion");
+                        session.CompanyID = R["Company"].ToString();
+
+                        quoteImpl = Ice.Lib.Framework.WCFServiceSupport.CreateImpl<QuoteImpl>(session, Epicor.ServiceModel.Channels.ImplBase<QuoteSvcContract>.UriPath);
+
+                        dsQuoteImpl = new QuoteDataSet();
+
+                        #region Verificamos si existe el Quote en Epicor
+
+                        try
+                        {
+                            Console.WriteLine("Looking for Quote...");
+                            dsQuoteImpl = quoteImpl.GetByID(int.Parse(R["QuoteNum"].ToString()));
+                            Console.WriteLine("Quote already exists, Updating...");
+
+                        }
+                        catch (Exception Ex)
+                        {
+                            throw new Exception("Quote Not Found...[" + Ex.Message + "]");
+                        }
+                        #endregion
+
+                        #endregion
 
 
-                Console.WriteLine("Cargamos datos de los detalles...");
-                Dictionary<string, CrmDataTypeWrapper> detailArray = new Dictionary<string, CrmDataTypeWrapper>();
 
-                //set write-in
-                CrmDataTypeWrapper quote = new CrmDataTypeWrapper();
-                quote.ReferencedEntity = "quote";
-                quote.Value = quoteID;//new Guid("9222A75A-743D-E711-80E4-3863BB34E918");
-                quote.Type = CrmFieldType.Lookup;
 
-                detailArray["quoteid"] = quote;
+                        //create a batch for commit/rollback scenario
+                        Console.WriteLine("Creamos Batch...");
+                        Guid batchID = clientConn.CreateBatchOperationRequest("quotebatch", true, false);
 
-                //set write-in
-                //detailArray["isproductoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                        //create quote for this account
+                        //Entity quote = new Entity("quote");
 
-                detailArray["isproductoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                        Dictionary<string, CrmDataTypeWrapper> quoteArray = new Dictionary<string, CrmDataTypeWrapper>();
 
-                //set price overridden
-                //detailArray["ispriceoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
 
-                detailArray["ispriceoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                        Console.WriteLine("Obtenemos Id Cliente...");
+                        CrmDataTypeWrapper cust = new CrmDataTypeWrapper();
+                        cust.ReferencedEntity = "account";
+                        cust.Value = Guid.Parse(R["CRMCustID"].ToString());
+                        cust.Type = CrmFieldType.Customer;
 
-                //set the description
-                detailArray["productdescription"] = new CrmDataTypeWrapper("write-in", CrmFieldType.String);
+                        quoteArray["customerid"] = cust;
 
-                //set the price
-                detailArray["priceperunit"] = new CrmDataTypeWrapper((decimal)(15.5), CrmFieldType.CrmMoney);
+                        //Set the Name of the Quote
+                        quoteArray["name"] = new CrmDataTypeWrapper("Epicor Quote Num: " + R["QuoteNum"].ToString(), CrmFieldType.String);
+                        quoteArray["new_epicorquoteid"] = new CrmDataTypeWrapper(R["QuoteNum"].ToString(), CrmFieldType.String);
+                        quoteArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
 
-                //qty
-                detailArray["quantity"] = new CrmDataTypeWrapper((decimal)(10), CrmFieldType.CrmDecimal);
+                        //set the name
+                        Guid quoteID = Guid.NewGuid();
+                        quoteArray["quoteid"] = new CrmDataTypeWrapper(quoteID, CrmFieldType.UniqueIdentifier);
 
-                Console.WriteLine("Creamos Detalle...");
-                clientConn.CreateNewRecord("quotedetail", detailArray, batchId: batchID);
+                        //Obtenemos la lista de precios a utilizar
+                        CrmDataTypeWrapper pricelevel = new CrmDataTypeWrapper();
+                        pricelevel.ReferencedEntity = "pricelevel";
+                        pricelevel.Value = new Guid("67C3C505-CD5A-E411-80D2-005056BE1C27");
+                        pricelevel.Type = CrmFieldType.Lookup;
+                        quoteArray["pricelevelid"] = pricelevel; //new CrmDataTypeWrapper(new EntityReference("pricelevel", new Guid("9222A75A-743D-E711-80E4-3863BB34E918")), CrmFieldType.Lookup);
 
-                //execute batch
-                ExecuteMultipleResponse response = clientConn.ExecuteBatch(batchID);
-                Console.WriteLine("Exito!");
 
+                        Console.WriteLine("Creamos Encabezado...");
+                        clientConn.CreateNewRecord("quote", quoteArray, batchId: batchID);
+
+                        Console.WriteLine("Cargamos datos de los detalles...");
+                        Dictionary<string, CrmDataTypeWrapper> detailArray = new Dictionary<string, CrmDataTypeWrapper>();
+
+                        //set write-in
+                        CrmDataTypeWrapper quote = new CrmDataTypeWrapper();
+                        quote.ReferencedEntity = "quote";
+                        quote.Value = quoteID; //new Guid("9222A75A-743D-E711-80E4-3863BB34E918");
+                        quote.Type = CrmFieldType.Lookup;
+
+                        detailArray["quoteid"] = quote;
+
+                        foreach (DataRow quoteDtlRow in dsQuoteImpl.QuoteDtl)
+                        {
+                            //set write-in
+                            //detailArray["isproductoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                            detailArray["isproductoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                            //set price overridden
+                            //detailArray["ispriceoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                            detailArray["ispriceoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                            //set the description
+                            detailArray["productdescription"] = new CrmDataTypeWrapper(quoteDtlRow["PartNum"].ToString(), CrmFieldType.String);
+
+                            //set the price
+                            detailArray["priceperunit"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["DocExpUnitPrice"]), CrmFieldType.CrmMoney);
+
+                            //qty
+                            detailArray["quantity"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["OrderQty"]), CrmFieldType.CrmDecimal);
+
+                            Console.WriteLine("Creamos Detalle...");
+                            clientConn.CreateNewRecord("quotedetail", detailArray, batchId: batchID);
+                        }
+                        //execute batch
+                        ExecuteMultipleResponse response = clientConn.ExecuteBatch(batchID);
+                        Console.WriteLine("Exito!");
+
+                        ColumnSet cols = new ColumnSet(new String[] { "quotenumber" });
+                        Entity quoteData = clientConn.Retrieve("quote", quoteID, cols);
+
+                        Console.WriteLine("Created Quote number: " + quoteData["quotenumber"].ToString());
+
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();                        
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["QuoteComment"] = quoteData["quotenumber"].ToString();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["LeadRating"] = "1"; 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        Console.WriteLine("Updating...");
+                        quoteImpl.Update(dsQuoteImpl);
+                        Console.WriteLine("Success");
+
+                    }
+                    Hashtable hsUD01 = new Hashtable();
+                    hsUD01.Add("Key1", R["Idx"].ToString());
+                    hsUD01.Add("Key2", R["QuoteNum"].ToString());
+                    hsUD01.Add("Key3", "E101QuoteData");
+                    hsUD01.Add("Key4", "");
+                    hsUD01.Add("Key5", "");
+                    hsUD01.Add("CheckBox01", "true");
+
+                    insertDataUD01(epiConnector, hsUD01);
+                }
             }
             catch (Exception Ex)
             {
                 Console.WriteLine(Ex.Message);
             }
-            #endregion
+            
         }
 
 
