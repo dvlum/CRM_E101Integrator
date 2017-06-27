@@ -51,75 +51,79 @@ namespace CRM_iE10IntegratorConsole
                 try
                 {
 
-
+                    /*
                     #region E101 Customers
 
-                    //Console.WriteLine("--------------------E10 Customers OPS---------------------------");
-                    //Console.WriteLine("Obtenemos los Cutomers pendientes de EPICOR...");
-                    //VerifyEpicorChange();
-                    //Console.WriteLine();
+                    LogFile("--------------------E10 Customers OPS---------------------------");
+                    LogFile("Obtenemos los Cutomers pendientes de EPICOR...");
+                    VerifyEpicorChange();
+                    LogFile("");
 
-                    //Thread.Sleep(2000);
+                    Thread.Sleep(2000);
 
 
                     #endregion
 
                     #region CRM Customers
 
-                    //Console.WriteLine("-------------------CRM Account OPS----------------------------");
-                    //Console.WriteLine("Obtenemos los Cutomers pendientes de CRM...");
-                    //VerifyCRMChange();
-                    //Console.WriteLine();
+                    LogFile("-------------------CRM Account OPS----------------------------");
+                    LogFile("Obtenemos los Cutomers pendientes de CRM...");
+                    VerifyCRMChange();
+                    LogFile("");
 
-                    //Thread.Sleep(2000);
+                    Thread.Sleep(2000);
 
                     #endregion
 
                     #region CRM Quotes
 
-                    //Console.WriteLine("Obtenemos Quotes pendientes de CRM...");
-                    //CRM_QuoteChange();
-
-                    //Thread.Sleep(3000);
+                    LogFile("------------------CRM Quotes OPS-----------------------------");
+                    LogFile("Obtenemos Quotes pendientes de CRM...");
+                    CRM_QuoteChange();
+                    LogFile("");
+                    Thread.Sleep(2000);
 
                     #endregion
 
                     #region E101 Contacts
 
-                    //Console.WriteLine("------------------E10 Contact OPS-----------------------------");
-                    //Console.WriteLine("Obtenemos Contactos pendientes de Epicor...");
-                    //E101CreateUpdateContact();
-                    //Console.WriteLine();
-                    //Thread.Sleep(2000);
+                    LogFile("------------------E10 Contact OPS-----------------------------");
+                    LogFile("Obtenemos Contactos pendientes de Epicor...");
+                    E101CreateUpdateContact();
+                    LogFile("");
+                    Thread.Sleep(2000);
 
                     #endregion
 
                     #region CRM Contacts                    
 
-                    //Console.WriteLine("------------------CRM Contacts OPS-----------------------------");
-                    //Console.WriteLine("Obtenemos Contactos pendientes de CRM...");
-                    //CRMCreateUpdateContact();
-                    //Console.WriteLine();
-                    //Thread.Sleep(2000);
+                    LogFile("------------------CRM Contacts OPS-----------------------------");
+                    LogFile("Obtenemos Contactos pendientes de CRM...");
+                    CRMCreateUpdateContact();
+                    LogFile("");
+                    Thread.Sleep(2000);
 
                     #endregion
 
                     #region E101 Quotes
 
-                    Console.WriteLine("------------------E10 Quotes OPS-----------------------------");
-                    Console.WriteLine("Obtenemos las cotizaciones pendientes de Epicor...");
+                    LogFile("------------------E10 Quotes OPS-----------------------------");
+                    LogFile("Obtenemos las cotizaciones pendientes de Epicor...");
                     E101CreateUpdCRMQuote();
-                    Console.WriteLine();
+                    LogFile("");
                     Thread.Sleep(5000);
 
                     #endregion
-                    //DelectQuoteLine();
-
+                    */
+                    LogFile("Activating quote [QUO-34071-H7P8W9]");
+                    ActivateCRMQuote("QUO-34071-H7P8W9", false);
+                    LogFile("DONE! - Activating quote [QUO-34071-H7P8W9]");
+                    Thread.Sleep(5000);
 
                 }
                 catch (Exception Ex)
                 {
-                    Console.WriteLine(Ex.Message);
+                    LogFile(Ex.Message);
                 }
             }
         }
@@ -136,13 +140,13 @@ namespace CRM_iE10IntegratorConsole
 
                 String spGetOps = File.ReadAllText(ConfigurationManager.AppSettings["spCRMGetOps"].ToString());
 
-                //Console.WriteLine("Obtenemos las Operaciones del CRM");
+                //LogFile("Obtenemos las Operaciones del CRM");
                 DataTable dtCRMOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
                                                                             ConfigurationManager.AppSettings["crmConnection"], "Ops", 0);
 
                 Hashtable hsCRMOps = new Hashtable();
 
-                //Console.WriteLine("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
+                //LogFile("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
                 foreach (DataRow R in dtCRMOps.Rows)
                 {
                     hsCRMOps.Add(R["Idx"].ToString(), R["AccountId"].ToString());
@@ -154,13 +158,13 @@ namespace CRM_iE10IntegratorConsole
 
                 spGetOps = File.ReadAllText(ConfigurationManager.AppSettings["spGetCRMProcessedOps"].ToString());
 
-                //Console.WriteLine("Obtenemos las Operaciones ya procesadas del CRM");
+                //LogFile("Obtenemos las Operaciones ya procesadas del CRM");
                 DataTable dtE10ProcessedOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
                                                                             ConfigurationManager.AppSettings["iE101Connection"], "Ops", 0);
 
                 Hashtable hsE10Ops = new Hashtable();
 
-                //Console.WriteLine("Total de Operaciones procesadas [" + dtE10ProcessedOps.Rows.Count.ToString() + "]");
+                //LogFile("Total de Operaciones procesadas [" + dtE10ProcessedOps.Rows.Count.ToString() + "]");
                 foreach (DataRow R in dtE10ProcessedOps.Rows)
                 {
                     hsE10Ops.Add(R["CRMID"].ToString(), R["CRMID"].ToString());
@@ -171,15 +175,15 @@ namespace CRM_iE10IntegratorConsole
 
                 #region Obtenemos las Operaciones reales a Procesar
 
-                //Console.WriteLine("Obtenemos las Operaciones reales a Procesar...");
+                //LogFile("Obtenemos las Operaciones reales a Procesar...");
                 Hashtable opsToProcess = CompareHashtables(hsCRMOps, hsE10Ops);
 
                 #endregion
 
-                Console.WriteLine("Operaciones reales a Procesar [" + opsToProcess.Count.ToString() + "]");
+                LogFile("Operaciones reales a Procesar [" + opsToProcess.Count.ToString() + "]");
                 foreach (DictionaryEntry entry in opsToProcess)
                 {
-                    Console.WriteLine("Hacemos la conexion con el CRM para procesar [" + entry.Key.ToString() + "]");
+                    LogFile("Hacemos la conexion con el CRM para procesar [" + entry.Key.ToString() + "]");
                     CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
 
                     string acctName = string.Empty;
@@ -194,10 +198,10 @@ namespace CRM_iE10IntegratorConsole
 
                     EntityCollection results = clientConn.RetrieveMultiple(qry);  //adjust the CrmServiceClient client object to the name used in your code
 
-                    Console.WriteLine("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
+                    LogFile("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
                     if (results != null & results.Entities.Count > 0)
                     {
-                        Console.WriteLine("Account Id [" + results.Entities[0].Id.ToString() + "]");
+                        LogFile("Account Id [" + results.Entities[0].Id.ToString() + "]");
                         acctName = results.Entities[0]["name"].ToString();
                         //Entity updAccount = new Entity("account", "accountid", Guid.Parse(results.Entities[0].Id.ToString()));
 
@@ -206,14 +210,14 @@ namespace CRM_iE10IntegratorConsole
                             "epic6s_countryid", "epic6s_customergroupid", "epic6s_termsid" });
                         Entity updAccount = clientConn.Retrieve("account", Guid.Parse(results.Entities[0].Id.ToString()), cols);
 
-                        Console.WriteLine("--------------------------------------------------");
-                        Console.WriteLine(manageNullKey(updAccount, "epic6s_countryid"));
-                        //Console.WriteLine(((EntityReference)updAccount["epic6s_countryid"]).Id.ToString());
-                        Console.WriteLine(manageNullKey(updAccount, "epic6s_customergroupid"));
-                        //Console.WriteLine(((EntityReference)updAccount["epic6s_customergroupid"]).Id.ToString());
-                        Console.WriteLine(manageNullKey(updAccount, "epic6s_termsid"));
-                        //Console.WriteLine(((EntityReference)updAccount["epic6s_termsid"]).Id.ToString());
-                        Console.WriteLine("--------------------------------------------------");
+                        LogFile("--------------------------------------------------");
+                        LogFile(manageNullKey(updAccount, "epic6s_countryid"));
+                        //LogFile(((EntityReference)updAccount["epic6s_countryid"]).Id.ToString());
+                        LogFile(manageNullKey(updAccount, "epic6s_customergroupid"));
+                        //LogFile(((EntityReference)updAccount["epic6s_customergroupid"]).Id.ToString());
+                        LogFile(manageNullKey(updAccount, "epic6s_termsid"));
+                        //LogFile(((EntityReference)updAccount["epic6s_termsid"]).Id.ToString());
+                        LogFile("--------------------------------------------------");
 
                         #region Obtenemos los Ids de Terms, Groups y Country
 
@@ -224,34 +228,34 @@ namespace CRM_iE10IntegratorConsole
                         ColumnSet colsTerms = null;
                         Entity termsEntity = null;
 
-                        Console.WriteLine("--------------------------------------------------");
+                        LogFile("--------------------------------------------------");
                         if (manageNullKey(updAccount, "epic6s_termsid") != "NA")
                         {
                             colsTerms = new ColumnSet(new String[] { "epic6s_terms", "epic6s_termscode" });
                             termsEntity = clientConn.Retrieve("epic6s_terms", Guid.Parse(((EntityReference)updAccount["epic6s_termsid"]).Id.ToString()), colsTerms);
-                            Console.WriteLine(manageNullKey(termsEntity, "epic6s_termscode"));
+                            LogFile(manageNullKey(termsEntity, "epic6s_termscode"));
                         }
 
                         if (manageNullKey(updAccount, "epic6s_customergroupid") != "NA")
                         {
                             colsGroups = new ColumnSet(new String[] { "epic6s_custgroupdesc", "epic6s_groupcode" });
                             groupsEntity = clientConn.Retrieve("epic6s_customergroup", Guid.Parse(((EntityReference)updAccount["epic6s_customergroupid"]).Id.ToString()), colsGroups);
-                            Console.WriteLine(manageNullKey(groupsEntity, "epic6s_groupcode"));
+                            LogFile(manageNullKey(groupsEntity, "epic6s_groupcode"));
                         }
 
                         if (manageNullKey(updAccount, "epic6s_countryid") != "NA")
                         {
                             colsCountry = new ColumnSet(new String[] { "epic6s_countryname", "epic6s_countrynumber" });
                             countryEntity = clientConn.Retrieve("epic6s_country", Guid.Parse(((EntityReference)updAccount["epic6s_countryid"]).Id.ToString()), colsCountry);
-                            Console.WriteLine(manageNullKey(countryEntity, "epic6s_countrynumber"));
+                            LogFile(manageNullKey(countryEntity, "epic6s_countrynumber"));
                         }
-                        Console.WriteLine("--------------------------------------------------");
+                        LogFile("--------------------------------------------------");
 
                         #endregion
 
                         #region Creamos los datos para Actualizar en Epicor.
 
-                        Console.WriteLine("Creamos los datos para Actualizar en Epicor.");
+                        LogFile("Creamos los datos para Actualizar en Epicor.");
                         DataSet dsParams = new DataSet();
 
                         // Creamos la tabla del encabezado
@@ -277,7 +281,7 @@ namespace CRM_iE10IntegratorConsole
                         dtDetail.Columns.Add("GroupCode", typeof(string));
                         dtDetail.Columns.Add("CountryNum", typeof(string));
 
-                        Console.WriteLine("Mostramos los datos a actualizar...");
+                        LogFile("Mostramos los datos a actualizar...");
                        
 
                         dtDetail.Rows.Add(manageNullKey(updAccount, "accountnumber"),
@@ -299,7 +303,7 @@ namespace CRM_iE10IntegratorConsole
                         dsParams.Tables.Add(dtHeader);
                         dsParams.Tables.Add(dtDetail);
 
-                        Console.WriteLine("Ejecutamos el metodo de Epicor [AddUpdCustomer]");
+                        LogFile("Ejecutamos el metodo de Epicor [AddUpdCustomer]");
                         AddUpdCustomer(epiConnector, dsParams);
 
                         #endregion
@@ -369,7 +373,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(epiResults.TransactionData + "[" + Ex.Message + "]");
+                LogFile(epiResults.TransactionData + "[" + Ex.Message + "]");
             }
         }
 
@@ -383,7 +387,7 @@ namespace CRM_iE10IntegratorConsole
                 DataTable dtOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
                                                                             ConfigurationManager.AppSettings["iE101Connection"], "Ops", 0);
 
-                Console.WriteLine("Number of Records to Process: ["+ dtOps.Rows.Count.ToString() +"]");
+                LogFile("Number of Records to Process: ["+ dtOps.Rows.Count.ToString() +"]");
 
                 foreach (DataRow R in dtOps.Rows)
                 {
@@ -415,9 +419,9 @@ namespace CRM_iE10IntegratorConsole
 
                     if (results != null & results.Entities.Count > 0)
                     {
-                        Console.WriteLine("Update...");
+                        LogFile("Update...");
                         acctName = results.Entities[0]["name"].ToString();
-                        Console.WriteLine("Account Id a actualizar: [" + results.Entities[0].Id.ToString() + "]");
+                        LogFile("Account Id a actualizar: [" + results.Entities[0].Id.ToString() + "]");
                         Entity updAccount = new Entity("account", "accountid", Guid.Parse(results.Entities[0].Id.ToString()));
 
                         //Name                        
@@ -437,11 +441,11 @@ namespace CRM_iE10IntegratorConsole
 
                         updAccount["epic6s_updatedinepicor"] = true; 
                         clientConn.Update(updAccount);
-                        Console.WriteLine("DONE!");
+                        LogFile("DONE!");
                     }
                     else
                     {
-                        Console.WriteLine("CREATE!");
+                        LogFile("CREATE!");
                         //another way to create a new record using entity object
                         Entity account = new Entity("account");
 
@@ -477,7 +481,7 @@ namespace CRM_iE10IntegratorConsole
                         dtDetail.Columns.Add("CRMAccountID_c", typeof(string));
                         dtDetail.Columns.Add("FaxNum", typeof(string));
 
-                        Console.WriteLine("Mostramos los datos a actualizar...");
+                        LogFile("Mostramos los datos a actualizar...");
 
 
                         dtDetail.Rows.Add(R["CustNum"].ToString(),
@@ -487,12 +491,12 @@ namespace CRM_iE10IntegratorConsole
                         dsParams.Tables.Add(dtHeader);
                         dsParams.Tables.Add(dtDetail);
 
-                        Console.WriteLine("Ejecutamos el metodo de Epicor [AddUpdCustomer]");
+                        LogFile("Ejecutamos el metodo de Epicor [AddUpdCustomer]");
                         AddUpdCustomer(epiConnector, dsParams);
 
                         #endregion
 
-                        Console.WriteLine("DONE!");
+                        LogFile("DONE!");
 
                         //accountnumber has to be an alternate key 
                         //Entity updAccount = new Entity("account", "accountnumber", "AAAAA3");
@@ -532,7 +536,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
         }
 
@@ -546,12 +550,12 @@ namespace CRM_iE10IntegratorConsole
 
                 String spGetOps = File.ReadAllText(ConfigurationManager.AppSettings["spGetQuoteOps"].ToString());
 
-                Console.WriteLine("Obtenemos las Operaciones del CRM");
+                LogFile("Obtenemos las Operaciones del CRM");
                 DataTable dtCRMOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
                                                                             ConfigurationManager.AppSettings["crmConnection"], "Ops", 0);
                 
 
-                Console.WriteLine("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
+                LogFile("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
 
                 #endregion
 
@@ -561,8 +565,8 @@ namespace CRM_iE10IntegratorConsole
                 {
                     String CRMQuoteID = R[0].ToString();
 
-                    Console.WriteLine("Procesando Quote# [" + CRMQuoteID + "]");
-                    Console.WriteLine("Hacemos la conexion con el CRM para procesar [" + CRMQuoteID + "]");
+                    LogFile("Procesando Quote# [" + CRMQuoteID + "]");
+                    LogFile("Hacemos la conexion con el CRM para procesar [" + CRMQuoteID + "]");
 
                     // Hacemos la conexion con el CRM
                     CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
@@ -577,27 +581,27 @@ namespace CRM_iE10IntegratorConsole
 
                     EntityCollection results = clientConn.RetrieveMultiple(qry);  //adjust the CrmServiceClient client object to the name used in your code
 
-                    Console.WriteLine("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
+                    LogFile("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
                     foreach (Entity Q in results.Entities)
                     {
-                        /*Console.WriteLine("--------------------------------------------------");
-                        Console.WriteLine(manageNullKey(Q, "quotenumber"));
-                        Console.WriteLine(manageNullKey(Q, "customerid"));
-                        Console.WriteLine(manageNullKey(Q, "new_customerpo"));
-                        Console.WriteLine(manageNullKey(Q, "ownerid"));
-                        Console.WriteLine(manageNullKey(Q, "description"));
-                        Console.WriteLine("--------------------------------------------------");*/                       
+                        /*LogFile("--------------------------------------------------");
+                        LogFile(manageNullKey(Q, "quotenumber"));
+                        LogFile(manageNullKey(Q, "customerid"));
+                        LogFile(manageNullKey(Q, "new_customerpo"));
+                        LogFile(manageNullKey(Q, "ownerid"));
+                        LogFile(manageNullKey(Q, "description"));
+                        LogFile("--------------------------------------------------");*/                       
 
                         ColumnSet cols = new ColumnSet(new String[] { "epic6s_tempcustid", "accountnumber", "name", "address1_line1", "address1_line2", "address1_line3", "address1_stateorprovince", "address1_city" });
                         Entity custAccount = clientConn.Retrieve("account", Guid.Parse(((EntityReference)Q["customerid"]).Id.ToString()), cols);
 
-                        /*Console.WriteLine("--------------------------------------------------");
-                        Console.WriteLine(manageNullKey(custAccount, "name"));
-                        Console.WriteLine(manageNullKey(custAccount, "accountnumber"));     // CustID Epicor
-                        Console.WriteLine(((EntityReference)Q["customerid"]).Id.ToString());
-                        Console.WriteLine(((EntityReference)Q["ownerid"]).Id.ToString());
-                        Console.WriteLine("--------------------------------------------------");*/
-                        Console.WriteLine(manageNullKey(Q, "epic6s_needby"));
+                        /*LogFile("--------------------------------------------------");
+                        LogFile(manageNullKey(custAccount, "name"));
+                        LogFile(manageNullKey(custAccount, "accountnumber"));     // CustID Epicor
+                        LogFile(((EntityReference)Q["customerid"]).Id.ToString());
+                        LogFile(((EntityReference)Q["ownerid"]).Id.ToString());
+                        LogFile("--------------------------------------------------");*/
+                        LogFile(manageNullKey(Q, "epic6s_needby"));
 
                         #region Creamos Operacion en Epicor
 
@@ -609,7 +613,8 @@ namespace CRM_iE10IntegratorConsole
                         dtQuoteHead.Columns.Add("QuoteComment", typeof(string));
                         dtQuoteHead.Columns.Add("PONum", typeof(string));
                         dtQuoteHead.Columns.Add("QuoteNum", typeof(string));
-                        dtQuoteHead.Columns.Add("NeedByDate", typeof(string)); 
+                        dtQuoteHead.Columns.Add("NeedByDate", typeof(string));
+                        
 
                         dtQuoteHead.Rows.Add("2000",
                                                 manageNullKey(custAccount, "accountnumber"),
@@ -635,24 +640,38 @@ namespace CRM_iE10IntegratorConsole
                         
                         EntityCollection resultsDtl = clientConn.RetrieveMultiple(qryDtl);  //adjust the CrmServiceClient client object to the name used in your code
 
-                        Console.WriteLine("Quote Details: [" + resultsDtl.Entities.Count.ToString() + "]");
+                        LogFile("Quote Details: [" + resultsDtl.Entities.Count.ToString() + "]");
                         foreach (Entity QDTL in resultsDtl.Entities)
                         {
-                            //name, productnumber, description
-                            ColumnSet colsProd = new ColumnSet(new String[] { "name", "productnumber", "description" });
-                            Entity prodEntity = clientConn.Retrieve("product", Guid.Parse(((EntityReference)QDTL["productid"]).Id.ToString()), colsProd);
-                            Console.WriteLine("Line Guid: " + ((EntityReference)QDTL["productid"]).Id.ToString());
-                            /*Console.WriteLine("--------------------------------------------------"); 
-                            Console.WriteLine(manageNullKey(prodEntity, "productnumber"));
-                            Console.WriteLine(manageNullKey(prodEntity, "name"));                            
-                            Console.WriteLine(manageNullKey(QDTL, "quantity"));
-                            Console.WriteLine(((Microsoft.Xrm.Sdk.Money)QDTL["priceperunit"]).Value.ToString());
-                            Console.WriteLine("--------------------------------------------------");*/
+                            LogFile(manageNullKey(QDTL, "productdescription"));
 
-                            dtQuoteDtl.Rows.Add(manageNullKey(prodEntity, "productnumber"), 
-                                                manageNullKey(prodEntity, "name"),
-                                                manageNullKey(QDTL, "quantity"),
-                                                ((Microsoft.Xrm.Sdk.Money)QDTL["priceperunit"]).Value.ToString());
+                            if (manageNullKey(QDTL, "productid") != "NA")
+                            {
+                                //name, productnumber, description
+                                ColumnSet colsProd = new ColumnSet(new String[] { "name", "productnumber", "description" });
+                                Entity prodEntity = clientConn.Retrieve("product", Guid.Parse(((EntityReference)QDTL["productid"]).Id.ToString()), colsProd);
+                                LogFile("Line Guid: " + ((EntityReference)QDTL["productid"]).Id.ToString());
+
+
+
+                                /*LogFile("--------------------------------------------------"); 
+                                LogFile(manageNullKey(prodEntity, "productnumber"));
+                                LogFile(manageNullKey(prodEntity, "name"));                            
+                                LogFile(manageNullKey(QDTL, "quantity"));
+                                LogFile(((Microsoft.Xrm.Sdk.Money)QDTL["priceperunit"]).Value.ToString());
+                                LogFile("--------------------------------------------------");*/
+
+                                dtQuoteDtl.Rows.Add(manageNullKey(prodEntity, "productnumber"),
+                                                    manageNullKey(prodEntity, "name"),
+                                                    manageNullKey(QDTL, "quantity"),
+                                                    ((Microsoft.Xrm.Sdk.Money)QDTL["priceperunit"]).Value.ToString());
+                            }else
+                            {
+                                dtQuoteDtl.Rows.Add(manageNullKey(QDTL, "productdescription"),
+                                                    manageNullKey(QDTL, "productdescription"),
+                                                    manageNullKey(QDTL, "quantity"),
+                                                    ((Microsoft.Xrm.Sdk.Money)QDTL["priceperunit"]).Value.ToString());
+                            }
                         }
                         //QuoteDetail - productid - description - quantity - priceperunit
                         //----------------------------------
@@ -660,24 +679,27 @@ namespace CRM_iE10IntegratorConsole
                         dsParams.Tables.Add(dtQuoteHead);
                         dsParams.Tables.Add(dtQuoteDtl);
 
-                        Console.WriteLine("Ejecutamos el metodo de Epicor [CreateNewQuote]");
+                        LogFile("Ejecutamos el metodo de Epicor [CreateNewQuote]");
                         epiResults = CreateNewQuote(epiConnector, dsParams);
 
-                        Console.WriteLine("Epicor Quote Number: " + epiResults.EpicorNum.ToString());
-                        Console.WriteLine("EXITO [CreateNewQuote]");
+                        LogFile("Epicor Quote Number: " + epiResults.EpicorNum.ToString());
+                        LogFile("EXITO [CreateNewQuote]");
 
-                        Console.WriteLine("Updating CRM transaction...");                       
+                        LogFile("Updating CRM transaction...");
+                        LogFile("Epicor Id For CRM: " + manageNullKey(Q, "new_epicorquoteid")); 
+                        if (manageNullKey(Q, "new_epicorquoteid") == "NA")
+                        {
+                            Q["new_epicorquoteid"] = epiResults.EpicorNum.ToString();
+                            Q["epic6s_updatedinepicor"] = true;
+                            clientConn.Update(Q);
+                        }
 
-                        Q["new_epicorquoteid"] = epiResults.EpicorNum.ToString();
-                        Q["epic6s_updatedinepicor"] = true;
-                        clientConn.Update(Q);
-
-                        Console.WriteLine("CRM Update complete.");
-                        Console.WriteLine("Set CRM Op Success.");
+                        LogFile("CRM Update complete.");
+                        LogFile("Set CRM Op Success.");
                         String spSetCrmSuccess = File.ReadAllText(ConfigurationManager.AppSettings["spSetQuoteOPSuccess"].ToString());
                         LAVHGenericMethods.DB.EXECStoreProcedure(spSetCrmSuccess.Replace("#CRMQUOTENUM#", CRMQuoteID),
                             LAVHGenericMethods.DB.OpenConnection(ConfigurationManager.AppSettings["crmConnection"].ToString()));
-                        Console.WriteLine("DONE!");
+                        LogFile("DONE!");
 
                         #endregion
 
@@ -692,7 +714,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(epiResults.TransactionData + "[" + Ex.Message + "]");
+                LogFile(epiResults.TransactionData + "[" + Ex.Message + "]");
             }
         }
 
@@ -704,18 +726,18 @@ namespace CRM_iE10IntegratorConsole
 
                 String spGetOps = File.ReadAllText(ConfigurationManager.AppSettings["spGetCRMContactOps"].ToString());
 
-                Console.WriteLine("Obtenemos los contactos por actualizar del CRM...");
+                LogFile("Obtenemos los contactos por actualizar del CRM...");
                 DataTable dtCRMOps = LAVHGenericMethods.DB.GetDataTableFromDB(spGetOps,
                                                                             ConfigurationManager.AppSettings["crmConnection"], "Ops", 0);
 
-                Console.WriteLine("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
+                LogFile("Total de Operaciones [" + dtCRMOps.Rows.Count.ToString() + "]");
 
                 foreach (DataRow R in dtCRMOps.Rows)
                 {
                     String CRMContactID = R["ContactReference"].ToString();
 
-                    Console.WriteLine("Procesando Contacto# [" + CRMContactID + "]");
-                    Console.WriteLine("Hacemos la conexion con el CRM para procesar [" + CRMContactID + "]");
+                    LogFile("Procesando Contacto# [" + CRMContactID + "]");
+                    LogFile("Hacemos la conexion con el CRM para procesar [" + CRMContactID + "]");
 
                     // Hacemos la conexion con el CRM
                     CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
@@ -729,25 +751,25 @@ namespace CRM_iE10IntegratorConsole
 
                     EntityCollection results = clientConn.RetrieveMultiple(qry);  //adjust the CrmServiceClient client object to the name used in your code
 
-                    Console.WriteLine("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
+                    LogFile("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
                     foreach (Entity Q in results.Entities)
                     {
                         ColumnSet cols = new ColumnSet(new String[] { "epic6s_tempcustid", "accountnumber", "name", "address1_line1", "address1_line2", "address1_line3", "address1_stateorprovince", "address1_city" });
                         Entity custAccount = clientConn.Retrieve("account", Guid.Parse(((EntityReference)Q["parentcustomerid"]).Id.ToString()), cols);
 
-                        /*Console.WriteLine("--------------------------------------------------");
-                        Console.WriteLine(manageNullKey(Q, "epic6s_epicorcontid"));
-                        Console.WriteLine(manageNullKey(Q, "telephone1"));
-                        Console.WriteLine(manageNullKey(Q, "mobilephone"));
-                        Console.WriteLine(manageNullKey(Q, "firstname"));
-                        Console.WriteLine(manageNullKey(Q, "lastname"));
-                        Console.WriteLine(manageNullKey(custAccount, "accountnumber"));
-                        Console.WriteLine(manageNullKey(Q, "emailaddress1"));
-                        Console.WriteLine("--------------------------------------------------");*/
+                        /*LogFile("--------------------------------------------------");
+                        LogFile(manageNullKey(Q, "epic6s_epicorcontid"));
+                        LogFile(manageNullKey(Q, "telephone1"));
+                        LogFile(manageNullKey(Q, "mobilephone"));
+                        LogFile(manageNullKey(Q, "firstname"));
+                        LogFile(manageNullKey(Q, "lastname"));
+                        LogFile(manageNullKey(custAccount, "accountnumber"));
+                        LogFile(manageNullKey(Q, "emailaddress1"));
+                        LogFile("--------------------------------------------------");*/
 
                         #region Creamos los datos para Actualizar en Epicor.
 
-                        Console.WriteLine("Creamos los datos para Actualizar en Epicor.");
+                        LogFile("Creamos los datos para Actualizar en Epicor.");
                         DataSet dsParams = new DataSet();
 
                         // Creamos la tabla del encabezado
@@ -773,27 +795,27 @@ namespace CRM_iE10IntegratorConsole
 
                         dsParams.Tables.Add(dtHeader);                        
 
-                        Console.WriteLine("Ejecutamos el metodo de Epicor [AddUpdtContact]");
+                        LogFile("Ejecutamos el metodo de Epicor [AddUpdtContact]");
                         try
                         {
                             AddUpdtContact(epiConnector, dsParams);
-                            Console.WriteLine("DONE!");
+                            LogFile("DONE!");
                             if (manageNullKey(Q, "epic6s_epicorcontid") == "NA")
                             {
-                                Console.WriteLine("Enviamos No. de contacto a CRM...");
+                                LogFile("Enviamos No. de contacto a CRM...");
                                 E101CreateUpdateContact();
                             }
 
-                            Console.WriteLine("Set CRM Op Success.");
+                            LogFile("Set CRM Op Success.");
                             String spSetCrmSuccess = File.ReadAllText(ConfigurationManager.AppSettings["spSetContactOPSuccess"].ToString());
                             LAVHGenericMethods.DB.EXECStoreProcedure(spSetCrmSuccess.Replace("#IDX#", R["Idx"].ToString()),
                                 LAVHGenericMethods.DB.OpenConnection(ConfigurationManager.AppSettings["crmConnection"].ToString()));
-                            Console.WriteLine("DONE!");
+                            LogFile("DONE!");
                             //spSetContactOPSuccess
                         }
                         catch(Exception Ex)
                         {
-                            Console.WriteLine(Ex.Message);
+                            LogFile(Ex.Message);
                         }
 
                         #endregion
@@ -805,7 +827,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
         }
 
@@ -855,20 +877,20 @@ namespace CRM_iE10IntegratorConsole
             }
             catch(Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
         }
 
-        public static void DeleteQuoteLine()
+        public static void DeleteQuoteLine(string CRMQuoteNum)
         {
             try
             {
                 CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
                                 
                 QueryExpression qry = new QueryExpression("quote");
-                qry.ColumnSet = new ColumnSet(new string[] { "quotenumber", "customerid", "new_customerpo", "ownerid", "description", "new_epicorquoteid", "quoteid", "epic6s_needby" });
+                qry.ColumnSet = new ColumnSet(new string[] { "quoteid", "quotenumber", "customerid", "new_customerpo", "ownerid", "description", "new_epicorquoteid", "quoteid", "epic6s_needby" });
                 FilterExpression filter = new FilterExpression(LogicalOperator.And);
-                ConditionExpression con = new ConditionExpression("quotenumber", ConditionOperator.Equal, "QUO-34047-V8Y9F2");
+                ConditionExpression con = new ConditionExpression("quotenumber", ConditionOperator.Equal, CRMQuoteNum);
                 filter.Conditions.Add(con);
                 qry.Criteria.AddFilter(filter);
 
@@ -887,17 +909,19 @@ namespace CRM_iE10IntegratorConsole
 
                     EntityCollection resultsDtl = clientConn.RetrieveMultiple(qryDtl);  //adjust the CrmServiceClient client object to the name used in your code
 
-                    Console.WriteLine("Quote Details: [" + resultsDtl.Entities.Count.ToString() + "]");
+                    LogFile("Quote Details: [" + resultsDtl.Entities.Count.ToString() + "]");
                     foreach (Entity QDTL in resultsDtl.Entities)
                     {
                         //name, productnumber, description
-                        ColumnSet colsProd = new ColumnSet(new String[] { "name", "productnumber", "description" });
-                        Entity prodEntity = clientConn.Retrieve("product", Guid.Parse(((EntityReference)QDTL["productid"]).Id.ToString()), colsProd);
-                        Console.WriteLine("Line Guid to DEL: " + QDTL["quotedetailid"].ToString());
+                        //ColumnSet colsProd = new ColumnSet(new String[] { "quotedetailid", "name", "productnumber", "description" });
+                        //Entity prodEntity = clientConn.Retrieve("product", Guid.Parse(((EntityReference)QDTL["productid"]).Id.ToString()), colsProd);
+                        LogFile("Obtenemos los datos del Produto..");
+
+                        LogFile("Line Guid to DEL: " + QDTL["quotedetailid"].ToString());
 
                         clientConn.Delete("quotedetail", Guid.Parse(QDTL["quotedetailid"].ToString()));
                         
-                        Console.WriteLine("DEL SUCCESS");
+                        LogFile("DEL SUCCESS");
                     }
                     clientConn.Update(Q);
                 }
@@ -906,7 +930,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
         }
         
@@ -922,7 +946,7 @@ namespace CRM_iE10IntegratorConsole
 
                 CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
 
-                Console.WriteLine("Number of Records to Process: [" + dtOps.Rows.Count.ToString() + "]");
+                LogFile("Number of Records to Process: [" + dtOps.Rows.Count.ToString() + "]");
 
                 foreach (DataRow R in dtOps.Rows)
                 {
@@ -944,8 +968,8 @@ namespace CRM_iE10IntegratorConsole
 
                     if (results != null & results.Entities.Count > 0)
                     {
-                        Console.WriteLine("Update...");                        
-                        Console.WriteLine("Contact Id a actualizar: [" + results.Entities[0].Id.ToString() + "]");
+                        LogFile("Update...");                        
+                        LogFile("Contact Id a actualizar: [" + results.Entities[0].Id.ToString() + "]");
                         Entity contact = new Entity("contact", "contactid", Guid.Parse(results.Entities[0].Id.ToString()));
 
                         
@@ -960,11 +984,11 @@ namespace CRM_iE10IntegratorConsole
 
                         //create the record - create method is available in latest version of tooling
                         clientConn.Update(contact);
-                        Console.WriteLine("DONE!");
+                        LogFile("DONE!");
                     }
                     else
                     {
-                        Console.WriteLine("Creating Contact!");
+                        LogFile("Creating Contact!");
                         //another way to create a new record using entity object
                         Entity contact = new Entity("contact");
 
@@ -979,7 +1003,7 @@ namespace CRM_iE10IntegratorConsole
 
                         //create the record - create method is available in latest version of tooling
                         Guid accId = clientConn.Create(contact);
-                        Console.WriteLine("Contact ID: " + accId.ToString());
+                        LogFile("Contact ID: " + accId.ToString());
                     }
 
                     #region Actulaizamos Operacion como Exito
@@ -999,14 +1023,12 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
         }
 
         public static void E101CreateUpdCRMQuote()
-        {
-
-            
+        {            
             
             try
             {
@@ -1019,21 +1041,17 @@ namespace CRM_iE10IntegratorConsole
 
                 CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
 
-                Console.WriteLine("Number of Records to Process: [" + dtOps.Rows.Count.ToString() + "]");
+                LogFile("Number of Records to Process: [" + dtOps.Rows.Count.ToString() + "]");
 
                 QuoteImpl quoteImpl = null;
                 QuoteDataSet dsQuoteImpl = null;
 
                 foreach (DataRow R in dtOps.Rows)
                 {
-
-
-
                     using (Session session = new Session(epiConnector.epiUser, epiConnector.epiPassword, epiConnector.epiServer, Session.LicenseType.Default, epiConnector.epiConfig))
                     {
-                        #region Obtenemos los datos de la cotizacion
 
-                        Console.WriteLine("Exito al hacer la conexion");
+                        LogFile("Exito al hacer la conexion");
                         session.CompanyID = R["Company"].ToString();
 
                         quoteImpl = Ice.Lib.Framework.WCFServiceSupport.CreateImpl<QuoteImpl>(session, Epicor.ServiceModel.Channels.ImplBase<QuoteSvcContract>.UriPath);
@@ -1044,112 +1062,195 @@ namespace CRM_iE10IntegratorConsole
 
                         try
                         {
-                            Console.WriteLine("Looking for Quote...");
+                            LogFile("Looking for Quote...");
                             dsQuoteImpl = quoteImpl.GetByID(int.Parse(R["QuoteNum"].ToString()));
-                            Console.WriteLine("Quote already exists, Updating...");
+                            LogFile("Quote already exists, Updating...");
 
                         }
                         catch (Exception Ex)
                         {
                             throw new Exception("Quote Not Found...[" + Ex.Message + "]");
                         }
-                        #endregion
 
                         #endregion
 
 
-
-
-                        //create a batch for commit/rollback scenario
-                        Console.WriteLine("Creamos Batch...");
-                        Guid batchID = clientConn.CreateBatchOperationRequest("quotebatch", true, false);
-
-                        //create quote for this account
-                        //Entity quote = new Entity("quote");
-
-                        Dictionary<string, CrmDataTypeWrapper> quoteArray = new Dictionary<string, CrmDataTypeWrapper>();
-
-
-                        Console.WriteLine("Obtenemos Id Cliente...");
-                        CrmDataTypeWrapper cust = new CrmDataTypeWrapper();
-                        cust.ReferencedEntity = "account";
-                        cust.Value = Guid.Parse(R["CRMCustID"].ToString());
-                        cust.Type = CrmFieldType.Customer;
-
-                        quoteArray["customerid"] = cust;
-
-                        //Set the Name of the Quote
-                        quoteArray["name"] = new CrmDataTypeWrapper("Epicor Quote Num: " + R["QuoteNum"].ToString(), CrmFieldType.String);
-                        quoteArray["new_epicorquoteid"] = new CrmDataTypeWrapper(R["QuoteNum"].ToString(), CrmFieldType.String);
-                        quoteArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
-
-                        //set the name
-                        Guid quoteID = Guid.NewGuid();
-                        quoteArray["quoteid"] = new CrmDataTypeWrapper(quoteID, CrmFieldType.UniqueIdentifier);
-
-                        //Obtenemos la lista de precios a utilizar
-                        CrmDataTypeWrapper pricelevel = new CrmDataTypeWrapper();
-                        pricelevel.ReferencedEntity = "pricelevel";
-                        pricelevel.Value = new Guid("67C3C505-CD5A-E411-80D2-005056BE1C27");
-                        pricelevel.Type = CrmFieldType.Lookup;
-                        quoteArray["pricelevelid"] = pricelevel; //new CrmDataTypeWrapper(new EntityReference("pricelevel", new Guid("9222A75A-743D-E711-80E4-3863BB34E918")), CrmFieldType.Lookup);
-
-
-                        Console.WriteLine("Creamos Encabezado...");
-                        clientConn.CreateNewRecord("quote", quoteArray, batchId: batchID);
-
-                        Console.WriteLine("Cargamos datos de los detalles...");
-                        Dictionary<string, CrmDataTypeWrapper> detailArray = new Dictionary<string, CrmDataTypeWrapper>();
-
-                        //set write-in
-                        CrmDataTypeWrapper quote = new CrmDataTypeWrapper();
-                        quote.ReferencedEntity = "quote";
-                        quote.Value = quoteID; //new Guid("9222A75A-743D-E711-80E4-3863BB34E918");
-                        quote.Type = CrmFieldType.Lookup;
-
-                        detailArray["quoteid"] = quote;
-
-                        foreach (DataRow quoteDtlRow in dsQuoteImpl.QuoteDtl)
+                        if (R["CRMQuoteId"].ToString() != "" || dsQuoteImpl.QuoteHed[0]["QuoteComment"].ToString() != "")
                         {
-                            //set write-in
-                            //detailArray["isproductoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                            #region Verificamos si Existe el Quote en CRM
 
-                            detailArray["isproductoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                            LogFile("Looking for CRM Quote [" + R["CRMQuoteId"].ToString() + "]");
 
-                            //set price overridden
-                            //detailArray["ispriceoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                            QueryExpression qry = new QueryExpression("quote");
+                            qry.ColumnSet = new ColumnSet(new string[] { "quoteid", "quotenumber", "customerid", "new_customerpo", "ownerid", "description", "new_epicorquoteid", "quoteid", "epic6s_needby" });
+                            FilterExpression filter = new FilterExpression(LogicalOperator.And);
+                            ConditionExpression con = new ConditionExpression("quotenumber", ConditionOperator.Equal, R["CRMQuoteId"].ToString());
+                            filter.Conditions.Add(con);
+                            qry.Criteria.AddFilter(filter);
 
-                            detailArray["ispriceoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
 
-                            //set the description
-                            detailArray["productdescription"] = new CrmDataTypeWrapper(quoteDtlRow["PartNum"].ToString(), CrmFieldType.String);
+                            EntityCollection results = clientConn.RetrieveMultiple(qry);  //adjust the CrmServiceClient client object to the name used in your code
 
-                            //set the price
-                            detailArray["priceperunit"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["DocExpUnitPrice"]), CrmFieldType.CrmMoney);
+                            LogFile("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
+                            foreach (Entity Q in results.Entities)
+                            { 
+                                LogFile("Deleting Quote Details...");
+                                DeleteQuoteLine(R["CRMQuoteId"].ToString());
 
-                            //qty
-                            detailArray["quantity"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["OrderQty"]), CrmFieldType.CrmDecimal);
+                                //create a batch for commit/rollback scenario
+                                LogFile("Creamos Batch...");
+                                Guid batchID = clientConn.CreateBatchOperationRequest("quotebatch", true, false);
 
-                            Console.WriteLine("Creamos Detalle...");
-                            clientConn.CreateNewRecord("quotedetail", detailArray, batchId: batchID);
+                                Dictionary<string, CrmDataTypeWrapper> quoteArray = new Dictionary<string, CrmDataTypeWrapper>();
+                                Dictionary<string, CrmDataTypeWrapper> detailArray = new Dictionary<string, CrmDataTypeWrapper>();
+
+                                //set write-in
+                                CrmDataTypeWrapper quote = new CrmDataTypeWrapper();
+                                quote.ReferencedEntity = "quote";
+                                quote.Value = Guid.Parse(Q["quoteid"].ToString()); //new Guid("9222A75A-743D-E711-80E4-3863BB34E918");
+                                quote.Type = CrmFieldType.Lookup;
+
+                                quoteArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                detailArray["quoteid"] = quote;
+
+                                foreach (DataRow quoteDtlRow in dsQuoteImpl.QuoteDtl)
+                                {
+                                    //set write-in
+                                    //detailArray["isproductoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                    detailArray["isproductoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                    //set price overridden
+                                    //detailArray["ispriceoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                    detailArray["ispriceoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                    //set the description
+                                    detailArray["productdescription"] = new CrmDataTypeWrapper(quoteDtlRow["PartNum"].ToString(), CrmFieldType.String);
+
+                                    //set the price
+                                    detailArray["priceperunit"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["DocExpUnitPrice"]), CrmFieldType.CrmMoney);
+
+                                    //qty
+                                    detailArray["quantity"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["OrderQty"]), CrmFieldType.CrmDecimal);
+
+                                    //Updated by service.
+                                    detailArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean); 
+
+                                    LogFile("Creamos Detalle...");
+                                    clientConn.CreateNewRecord("quotedetail", detailArray, batchId: batchID);
+                                }
+                                //execute batch
+                                ExecuteMultipleResponse response = clientConn.ExecuteBatch(batchID);
+                                LogFile("Exito!");
+
+                            }
+
+                            #endregion
                         }
-                        //execute batch
-                        ExecuteMultipleResponse response = clientConn.ExecuteBatch(batchID);
-                        Console.WriteLine("Exito!");
+                        else
+                        {
 
-                        ColumnSet cols = new ColumnSet(new String[] { "quotenumber" });
-                        Entity quoteData = clientConn.Retrieve("quote", quoteID, cols);
+                            //create a batch for commit/rollback scenario
+                            LogFile("Creamos Batch...");
+                            Guid batchID = clientConn.CreateBatchOperationRequest("quotebatch", true, false);
 
-                        Console.WriteLine("Created Quote number: " + quoteData["quotenumber"].ToString());
+                            //create quote for this account
+                            //Entity quote = new Entity("quote");
 
-                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();                        
-                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["QuoteComment"] = quoteData["quotenumber"].ToString();
-                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["LeadRating"] = "1"; 
-                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+                            Dictionary<string, CrmDataTypeWrapper> quoteArray = new Dictionary<string, CrmDataTypeWrapper>();
 
-                        Console.WriteLine("Updating...");
-                        quoteImpl.Update(dsQuoteImpl);
-                        Console.WriteLine("Success");
+
+                            LogFile("Obtenemos Id Cliente...");
+                            CrmDataTypeWrapper cust = new CrmDataTypeWrapper();
+                            cust.ReferencedEntity = "account";
+                            cust.Value = Guid.Parse(R["CRMCustID"].ToString());
+                            cust.Type = CrmFieldType.Customer;
+
+                            quoteArray["customerid"] = cust;
+
+                            //Set the Name of the Quote
+                            quoteArray["name"] = new CrmDataTypeWrapper("Epicor Quote Num: " + R["QuoteNum"].ToString(), CrmFieldType.String);
+                            quoteArray["new_epicorquoteid"] = new CrmDataTypeWrapper(R["QuoteNum"].ToString(), CrmFieldType.String);
+                            quoteArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+                            //quoteArray["epic6s_tasksetep"] = new CrmDataTypeWrapper(dsQuoteImpl.QuoteHed.Rows[0]["TaskSetID"].ToString(), CrmFieldType.String); 
+
+                            //set the name
+                            Guid quoteID = Guid.NewGuid();
+                            quoteArray["quoteid"] = new CrmDataTypeWrapper(quoteID, CrmFieldType.UniqueIdentifier);
+
+                            //Obtenemos la lista de precios a utilizar
+                            CrmDataTypeWrapper pricelevel = new CrmDataTypeWrapper();
+                            pricelevel.ReferencedEntity = "pricelevel";
+                            pricelevel.Value = new Guid("67C3C505-CD5A-E411-80D2-005056BE1C27");
+                            pricelevel.Type = CrmFieldType.Lookup;
+                            quoteArray["pricelevelid"] = pricelevel; //new CrmDataTypeWrapper(new EntityReference("pricelevel", new Guid("9222A75A-743D-E711-80E4-3863BB34E918")), CrmFieldType.Lookup);
+
+
+                            LogFile("Creamos Encabezado...");
+                            clientConn.CreateNewRecord("quote", quoteArray, batchId: batchID);
+
+                            LogFile("Cargamos datos de los detalles...");
+                            Dictionary<string, CrmDataTypeWrapper> detailArray = new Dictionary<string, CrmDataTypeWrapper>();
+
+                            //set write-in
+                            CrmDataTypeWrapper quote = new CrmDataTypeWrapper();
+                            quote.ReferencedEntity = "quote";
+                            quote.Value = quoteID; //new Guid("9222A75A-743D-E711-80E4-3863BB34E918");
+                            quote.Type = CrmFieldType.Lookup;
+
+                            detailArray["quoteid"] = quote;
+
+                            foreach (DataRow quoteDtlRow in dsQuoteImpl.QuoteDtl)
+                            {
+                                //set write-in
+                                //detailArray["isproductoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                detailArray["isproductoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                //set price overridden
+                                //detailArray["ispriceoverriden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                detailArray["ispriceoverridden"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                //set the description
+                                detailArray["productdescription"] = new CrmDataTypeWrapper(quoteDtlRow["PartNum"].ToString(), CrmFieldType.String);
+
+                                //set the price
+                                detailArray["priceperunit"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["DocExpUnitPrice"]), CrmFieldType.CrmMoney);
+
+                                //qty
+                                detailArray["quantity"] = new CrmDataTypeWrapper((decimal)(quoteDtlRow["OrderQty"]), CrmFieldType.CrmDecimal);
+
+                                //Updated in Epicor
+                                detailArray["epic6s_updatedinepicor"] = new CrmDataTypeWrapper(true, CrmFieldType.CrmBoolean);
+
+                                LogFile("Creamos Detalle...");
+                                clientConn.CreateNewRecord("quotedetail", detailArray, batchId: batchID);
+                            }
+                            //execute batch
+                            ExecuteMultipleResponse response = clientConn.ExecuteBatch(batchID);
+                            LogFile("Exito!");
+
+                            if (dsQuoteImpl.Tables["QuoteHed"].Rows[0]["QuoteComment"].ToString() == "")
+                            {
+                                ColumnSet cols = new ColumnSet(new String[] { "quotenumber" });
+                                Entity quoteData = clientConn.Retrieve("quote", quoteID, cols);
+
+                                LogFile("Created Quote number: " + quoteData["quotenumber"].ToString());
+
+                                dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                                dsQuoteImpl.Tables["QuoteHed"].Rows[0]["QuoteComment"] = quoteData["quotenumber"].ToString();
+                                dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                                dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                                LogFile("Updating...");
+                                LogFile("UPDATE SERVCE VALUE: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["LeadRating"].ToString() + "]");
+                                quoteImpl.Update(dsQuoteImpl);
+                                LogFile("Success");
+                            }
+                        }
 
                     }
                     Hashtable hsUD01 = new Hashtable();
@@ -1165,7 +1266,7 @@ namespace CRM_iE10IntegratorConsole
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
+                LogFile(Ex.Message);
             }
             
         }
@@ -1211,7 +1312,7 @@ namespace CRM_iE10IntegratorConsole
                     try
                     {                        
                         string custID = (dsParam.Tables[1].Rows[0]["CustID"].ToString() != "NA") ? dsParam.Tables[1].Rows[0]["CustID"].ToString() : dsParam.Tables[1].Rows[0]["tmpCustID"].ToString();
-                        Console.WriteLine("Buscamos: [" + custID + "]");
+                        LogFile("Buscamos: [" + custID + "]");
                         dsCustImpl = custImpl.GetByCustID(custID, false);
                         newRow = false;
                     }
@@ -1244,7 +1345,7 @@ namespace CRM_iE10IntegratorConsole
                                 dsCustImpl.Tables["Customer"].Rows[0]["CustID"] = tmpCustID;
                                 UpdateCRMAccount(Guid.Parse(dsParam.Tables[1].Rows[0]["CRMAccountID_c"].ToString()), tmpCustID);
 
-                                Console.WriteLine("tmpCustID = NA so: " + tmpCustID);
+                                LogFile("tmpCustID = NA so: " + tmpCustID);
                             }else
                             {
                                 if (dsParam.Tables[1].Rows[0]["CustID"].ToString() == "NA")
@@ -1256,7 +1357,7 @@ namespace CRM_iE10IntegratorConsole
                             if (!(C.ColumnName == "CustID" && dsParam.Tables[1].Rows[0]["CustID"].ToString() == "NA" && dsCustImpl.Tables["Customer"].Rows[0][C.ColumnName].ToString() != ""))
                             {
                                 dsCustImpl.Tables["Customer"].Rows[0][C.ColumnName] = dsParam.Tables[1].Rows[0][C.ColumnName];
-                                //Console.WriteLine("CustID = NA so: " + dsCustImpl.Tables["Customer"].Rows[0]["CustID"].ToString());
+                                //LogFile("CustID = NA so: " + dsCustImpl.Tables["Customer"].Rows[0]["CustID"].ToString());
                             }
                         }
                     }
@@ -1343,11 +1444,11 @@ namespace CRM_iE10IntegratorConsole
                 StringBuilder sbMessageOut = new StringBuilder();
                 bool newQuote = true;
 
-                Console.WriteLine("Hacemos Conexion con Epicor...");
+                LogFile("Hacemos Conexion con Epicor...");
 
                 using (Session session = new Session(conf.epiUser, conf.epiPassword, conf.epiServer, Session.LicenseType.Default, conf.epiConfig))
                 {
-                    Console.WriteLine("Exito al hacer la conexion");
+                    LogFile("Exito al hacer la conexion");
                     session.CompanyID = dsParams.Tables[0].Rows[0]["Company"].ToString();
                     //session.PlantID = dsParams.Tables["RMAHead"].Rows[0]["Plant"].ToString();
 
@@ -1360,15 +1461,15 @@ namespace CRM_iE10IntegratorConsole
 
                     try
                     {
-                        Console.WriteLine("Looking for Quote...");
+                        LogFile("Looking for Quote...");
                         int quoteNum = (dsParams.Tables[0].Rows[0]["QuoteNum"].ToString() != "NA") ? int.Parse(dsParams.Tables[0].Rows[0]["QuoteNum"].ToString()) : 0;
                         dsQuoteImpl = quoteImpl.GetByID(quoteNum);
-                        Console.WriteLine("Quote already exists, Updating...");
+                        LogFile("Quote already exists, Updating...");
                         newQuote = false;
                     }
                     catch (Exception Ex)
                     {
-                        Console.WriteLine("Quote Not Found...");
+                        LogFile("Quote Not Found...");
                         newQuote = true;
                     }
                     #endregion
@@ -1378,27 +1479,31 @@ namespace CRM_iE10IntegratorConsole
                     // Creamos las bases para la Cotizacion
                     if (newQuote)
                     {
-                        Console.WriteLine("Creating Quote Header...");
+                        LogFile("Creating Quote Header...");
                         quoteImpl.GetNewQuoteHed(dsQuoteImpl);
                     }
-                    Console.WriteLine("CustID: " + dsParams.Tables[0].Rows[0]["CustID"].ToString());
+                    LogFile("CustID: " + dsParams.Tables[0].Rows[0]["CustID"].ToString());
 
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0]["CustomerCustID"] = dsParams.Tables[0].Rows[0]["CustID"].ToString();
+                    dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
 
+                    LogFile("XXX - GetCustomerInfo: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                     quoteImpl.GetCustomerInfo(dsQuoteImpl);
 
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0]["CustomerCustID"] = dsParams.Tables[0].Rows[0]["CustID"].ToString();
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0]["QuoteComment"] = dsParams.Tables[0].Rows[0]["QuoteComment"].ToString();
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0]["PONum"] = dsParams.Tables[0].Rows[0]["PONum"].ToString();
+                    dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
                     //dsQuoteImpl.Tables["QuoteHed"].Rows[0]["NeedByDate"] = dsParams.Tables[0].Rows[0]["NeedByDate"].ToString(); 
                     dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
 
-                    Console.WriteLine("Updating...");
+                    LogFile("Updating...");
+                    LogFile("XXX - GetCustomerInfo - Update: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                     quoteImpl.Update(dsQuoteImpl);
-                    Console.WriteLine("Success");
+                    LogFile("Success");
 
                     #endregion
                     
@@ -1421,6 +1526,11 @@ namespace CRM_iE10IntegratorConsole
                         dsQuoteImpl.Tables["QuoteQty"].Rows[i].Delete();
                     }
 
+                    dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                    dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                    dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                    LogFile("XXX - After Delete Lines - Update: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                     quoteImpl.Update(dsQuoteImpl);
                     #endregion
 
@@ -1451,12 +1561,18 @@ namespace CRM_iE10IntegratorConsole
                     string explodeBOMerrMessage = String.Empty;
                     int rowIndex = 0;
 
+                    LogFile("Lineas a Crear: [" + dsParams.Tables[1].Rows.Count + "]");
                     foreach (DataRow quoteLine in dsParams.Tables[1].Rows)
                     {
                         partNum = quoteLine["PartNum"].ToString();
 
                         quoteImpl.GetNewQuoteDtl(dsQuoteImpl, _QuoteNum);
 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        LogFile("XXX - ChangePartNumMaster: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                         quoteImpl.ChangePartNumMaster(ref partNum, ref llsPhantom, ref lIsSalesKit, ref uomCode,
                                                         rowType, Guid.NewGuid(), salesKitView, removeKitComponents,
                                                         suppressUserPrompts, runChkPrePartInfo, out vMessage,
@@ -1474,6 +1590,11 @@ namespace CRM_iE10IntegratorConsole
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex]["DocExpUnitPrice"] = quoteLine["DocExpUnitPrice"].ToString();
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].EndEdit();
 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        LogFile("XXX - ChangePartNum: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                         quoteImpl.ChangePartNum(dsQuoteImpl, lSubstitutePartsExist, "");
 
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].BeginEdit();
@@ -1483,6 +1604,11 @@ namespace CRM_iE10IntegratorConsole
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex]["DocExpUnitPrice"] = quoteLine["DocExpUnitPrice"].ToString();
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].EndEdit();
 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        LogFile("XXX - ChangePartNum - Update: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                         quoteImpl.Update(dsQuoteImpl);
 
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].BeginEdit();
@@ -1492,6 +1618,11 @@ namespace CRM_iE10IntegratorConsole
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex]["DocExpUnitPrice"] = quoteLine["DocExpUnitPrice"].ToString();
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].EndEdit();
 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        LogFile("XXX - GetDtlUnitPriceInfo_User: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                         quoteImpl.GetDtlUnitPriceInfo_User(true, true, false, true, dsQuoteImpl);
 
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].BeginEdit();
@@ -1501,6 +1632,11 @@ namespace CRM_iE10IntegratorConsole
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex]["DocExpUnitPrice"] = quoteLine["DocExpUnitPrice"].ToString();
                         dsQuoteImpl.Tables["QuoteDtl"].Rows[rowIndex].EndEdit();
 
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].BeginEdit();
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"] = "CRM";
+                        dsQuoteImpl.Tables["QuoteHed"].Rows[0].EndEdit();
+
+                        LogFile("XXX - GetDtlUnitPriceInfo_User - Update: [" + dsQuoteImpl.Tables["QuoteHed"].Rows[0]["Reference"].ToString() + "]");
                         quoteImpl.Update(dsQuoteImpl);
                     }
                     #endregion
@@ -1522,11 +1658,11 @@ namespace CRM_iE10IntegratorConsole
                 StringBuilder sbMessageOut = new StringBuilder();
                 bool newContact = true;
 
-                Console.WriteLine("Hacemos Conexion con Epicor...");
+                LogFile("Hacemos Conexion con Epicor...");
 
                 using (Session session = new Session(conf.epiUser, conf.epiPassword, conf.epiServer, Session.LicenseType.Default, conf.epiConfig))
                 {
-                    Console.WriteLine("Exito al hacer la conexion");
+                    LogFile("Exito al hacer la conexion");
                     session.CompanyID = dsParams.Tables[0].Rows[0]["Company"].ToString();
                     //session.PlantID = dsParams.Tables["RMAHead"].Rows[0]["Plant"].ToString();                    
 
@@ -1537,7 +1673,7 @@ namespace CRM_iE10IntegratorConsole
 
                     try
                     {                        
-                        Console.WriteLine("Buscamos: [" + dsParams.Tables[0].Rows[0]["custID"].ToString() + "]"); 
+                        LogFile("Buscamos: [" + dsParams.Tables[0].Rows[0]["custID"].ToString() + "]"); 
                         dsCustImpl = custImpl.GetByCustID(dsParams.Tables[0].Rows[0]["custID"].ToString(), false);                        
                     }
                     catch (Exception Ex)
@@ -1552,7 +1688,7 @@ namespace CRM_iE10IntegratorConsole
                     
                     try
                     {
-                        Console.WriteLine("Buscamos el contacto No. " + dsParams.Tables[0].Rows[0]["ConNum"].ToString() +
+                        LogFile("Buscamos el contacto No. " + dsParams.Tables[0].Rows[0]["ConNum"].ToString() +
                             " del Cliente No. " + dsCustImpl.Tables["Customer"].Rows[0]["CustNum"].ToString());
 
                         if (dsParams.Tables[0].Rows[0]["ConNum"].ToString() != "NA")
@@ -1563,7 +1699,7 @@ namespace CRM_iE10IntegratorConsole
                                             where result1.Field<int>("PerConID") == int.Parse(dsParams.Tables[0].Rows[0]["ConNum"].ToString()) 
                                             select result1).Count();
 
-                            Console.WriteLine("Row Count: " + rowCount.ToString());
+                            LogFile("Row Count: " + rowCount.ToString());
                             if (rowCount > 0)
                                 newContact = false;
                             else
@@ -1576,7 +1712,7 @@ namespace CRM_iE10IntegratorConsole
                         }
                         else
                         {
-                            Console.WriteLine("Excepcion de ConNum = NA");
+                            LogFile("Excepcion de ConNum = NA");
                             throw new Exception();
                         }
 
@@ -1585,7 +1721,7 @@ namespace CRM_iE10IntegratorConsole
                         //newContact = false;
                     }catch(Exception Ex)
                     {
-                        Console.WriteLine("No se encontro el contacto No. " + dsParams.Tables[0].Rows[0]["ConNum"].ToString());
+                        LogFile("No se encontro el contacto No. " + dsParams.Tables[0].Rows[0]["ConNum"].ToString());
                         newContact = true;
                     }
 
@@ -1605,7 +1741,7 @@ namespace CRM_iE10IntegratorConsole
                     
                     custCntImpl.Update(dsCustCntImpl);
                     
-                    //Console.WriteLine("Contact No. " + dsCustCntImpl.Tables["CustCnt"].Rows[0]["PerConID"].ToString());
+                    //LogFile("Contact No. " + dsCustCntImpl.Tables["CustCnt"].Rows[0]["PerConID"].ToString());
                     epiResults.EpicorNum = int.Parse(dsCustCntImpl.Tables["CustCnt"].Rows[0]["PerConID"].ToString());
 
                 }
@@ -1618,5 +1754,112 @@ namespace CRM_iE10IntegratorConsole
         }
 
         //-------------------- EPICOR CODE --------------------//
+
+        public static void LogFile(string message)
+        {
+            try
+            {
+                Console.WriteLine(message);
+                LAVHGenericMethods.LogHandler.LogMessageHandler(LAVHGenericMethods.LogHandler.MessageType.INFO, "CRM - E101", message, ConfigurationManager.AppSettings["pathLog"].ToString());
+            }
+            catch (Exception Ex)
+            {
+                throw new Exception(Ex.Message);
+            }
+        }
+
+        public static void ActivateCRMQuote(String crmQuoteNum, bool ActivateDeactivate)
+        {
+            try
+            {
+                CrmServiceClient clientConn = new CrmServiceClient(ConfigurationManager.AppSettings["crmConnStringDEV"].ToString());
+
+                QueryExpression qry = new QueryExpression("quote");
+                qry.ColumnSet = new ColumnSet(new string[] { "quoteid", "quotenumber", "customerid", "new_customerpo", "ownerid", "description", "new_epicorquoteid", "quoteid", "epic6s_needby" });
+                FilterExpression filter = new FilterExpression(LogicalOperator.And);
+                ConditionExpression con = new ConditionExpression("quotenumber", ConditionOperator.Equal, crmQuoteNum);
+                filter.Conditions.Add(con);
+                qry.Criteria.AddFilter(filter);
+
+
+                EntityCollection results = clientConn.RetrieveMultiple(qry);  //adjust the CrmServiceClient client object to the name used in your code
+
+                LogFile("Registros encontrados: [" + results.Entities.Count.ToString() + "]");
+                foreach (Entity Q in results.Entities)
+                {
+                    // Change the Quote to Active State.
+                    SetStateRequest activateQuote = new SetStateRequest();
+                    activateQuote.EntityMoniker = new EntityReference("quote", new Guid(Q["quoteid"].ToString()));
+                    if (ActivateDeactivate)
+                    {
+                        activateQuote.State = new OptionSetValue(1); // Active
+                        activateQuote.Status = new OptionSetValue(2); // InProgress
+
+                    }else
+                    {
+                        activateQuote.State = new OptionSetValue(0); // Active
+                        activateQuote.Status = new OptionSetValue(1); // InProgress
+                    }
+                    clientConn.Execute(activateQuote);
+                }
+
+                
+
+            }
+            catch (Exception Ex)
+            {
+                LogFile(Ex.Message);
+            }
+        }
+
+        //Deactivate a record
+        public static void DeactivateRecord(string entityName, Guid recordId, IOrganizationService organizationService)
+        {
+            var cols = new ColumnSet(new[] { "statecode", "statuscode" });
+
+            //Check if it is Active or not
+            var entity = organizationService.Retrieve(entityName, recordId, cols);
+
+            if (entity != null && entity.GetAttributeValue<OptionSetValue>("statecode").Value == 0)
+            {
+                //StateCode = 1 and StatusCode = 2 for deactivating Account or Contact
+                SetStateRequest setStateRequest = new SetStateRequest()
+                {
+                    EntityMoniker = new EntityReference
+                    {
+                        Id = recordId,
+                        LogicalName = entityName,
+                    },
+                    State = new OptionSetValue(1),
+                    Status = new OptionSetValue(2)
+                };
+                organizationService.Execute(setStateRequest);
+            }
+        }
+
+        //Activate a record
+        public static void ActivateRecord(string entityName, Guid recordId, IOrganizationService organizationService)
+        {
+            var cols = new ColumnSet(new[] { "statecode", "statuscode" });
+
+            //Check if it is Inactive or not
+            var entity = organizationService.Retrieve(entityName, recordId, cols);
+
+            if (entity != null && entity.GetAttributeValue<OptionSetValue>("statecode").Value == 1)
+            {
+                //StateCode = 0 and StatusCode = 1 for activating Account or Contact
+                SetStateRequest setStateRequest = new SetStateRequest()
+                {
+                    EntityMoniker = new EntityReference
+                    {
+                        Id = recordId,
+                        LogicalName = entityName,
+                    },
+                    State = new OptionSetValue(0),
+                    Status = new OptionSetValue(1)
+                };
+                organizationService.Execute(setStateRequest);
+            }
+        }
     }
 }
